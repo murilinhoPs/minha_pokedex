@@ -1,7 +1,9 @@
 import 'package:minha_pokedex/src/domain/entities/pokemon.dart';
+import 'package:minha_pokedex/src/domain/exceptions/pokemon_storage_exceptions.dart';
 import 'package:minha_pokedex/src/domain/repositories/fav_pokemons_storage_repository.dart';
 import 'package:minha_pokedex/src/external/local_storage/pokemons/fav_pokemons_db_fields.dart';
 import 'package:minha_pokedex/src/infra/contracts/local_storage_provider.dart';
+import 'package:minha_pokedex/src/infra/mappers/map_pokemon_entity_to_pokemon_model.dart';
 import 'package:minha_pokedex/src/infra/models/pokemon_model.dart';
 
 class FavPokemonsStorageRepositoryImpl implements FavPokemonsStorageRepository {
@@ -12,58 +14,85 @@ class FavPokemonsStorageRepositoryImpl implements FavPokemonsStorageRepository {
   });
 
   Future<Pokemon> insertPokemon({
-    required String tableName,
-    required PokemonModel pokemon,
+    required Pokemon pokemon,
   }) async {
-    final id = await localStorage.insertItem(tableName, pokemon.toMap());
+    final pokemonModel = pokemon.mapPokemonEntityToModel();
+    try {
+      final id = await localStorage.insertItem(
+        favPokemonsTable,
+        pokemonModel.toMap(),
+      );
 
-    return pokemon.copyWith(id: id);
+      return pokemonModel.copyWith(id: id);
+    } catch (_) {
+      throw CouldNotAddFavPokemon();
+    }
   }
 
   Future<Pokemon> getPokemon(int itemId) async {
-    final pokemonMap = await localStorage.getItem(
-      tableName: favPokemonsTable,
-      values: FavPokemonsFields.values,
-      itemId: itemId,
-    );
+    try {
+      final pokemonMap = await localStorage.getItem(
+        tableName: favPokemonsTable,
+        values: FavPokemonsFields.values,
+        itemId: itemId,
+      );
 
-    return PokemonModel.fromMap(pokemonMap);
+      return PokemonModel.fromMap(pokemonMap);
+    } catch (_) {
+      throw CouldNotGetPokemon();
+    }
   }
 
   Future<List<Pokemon>> getAllPokemons() async {
-    print('Get All Pokemos');
+    try {
+      final allPokemons = await localStorage.getAllItems(favPokemonsTable);
 
-    final allPokemons = await localStorage.getAllItems(favPokemonsTable);
-
-    return allPokemons
-        .map(
-          (json) => PokemonModel.fromMap(json),
-        )
-        .toList();
+      return allPokemons
+          .map(
+            (json) => PokemonModel.fromMap(json),
+          )
+          .toList();
+    } catch (_) {
+      throw CouldNotGetAllPokemons();
+    }
   }
 
   Future<int> updatePokemon({
     required int id,
-    required PokemonModel pokemon,
+    required Pokemon pokemon,
   }) async {
-    final updatedPokemon = await localStorage.updateItem(
-      tableName: favPokemonsTable,
-      values: pokemon.toMap(),
-      itemId: id,
-    );
+    try {
+      final pokemonModel = pokemon.mapPokemonEntityToModel();
 
-    return updatedPokemon;
+      final updatedPokemon = await localStorage.updateItem(
+        tableName: favPokemonsTable,
+        values: pokemonModel.toMap(),
+        itemId: id,
+      );
+
+      return updatedPokemon;
+    } catch (_) {
+      throw CouldNotUpdateFavPokemon();
+    }
   }
 
   Future<int> deletePokemon(int id) async {
-    return await localStorage.deleteItem(
-      favPokemonsTable,
-      id,
-    );
+    try {
+      return await localStorage.deleteItem(
+        favPokemonsTable,
+        id,
+      );
+    } catch (_) {
+      throw CouldNotDeletePokemonFromFav();
+    }
   }
 
   @override
-  Future deletePokemons() async {
-    return await localStorage.deleteTable(favPokemonsTable);
+  Future<int> deletePokemons() async {
+    try {
+      return await localStorage.deleteTable(favPokemonsTable);
+    } catch (_) {
+      throw CouldNotDeleteAllPokemons();
+    }
   }
 }
