@@ -1,21 +1,20 @@
-import 'package:minha_pokedex/src/infra/models/pokemon_model.dart';
+import 'package:minha_pokedex/src/domain/entities/pokemon.dart';
 
 abstract class FavPokemonsStorageRepository {
-  Future getPokemon(int itemId) async {}
+  Future<Pokemon> insertPokemon({
+    required Pokemon pokemon,
+  });
 
-  Future getAllPokemons() async {}
+  Future<Pokemon> getPokemon(int itemId);
 
-  Future insertPokemon({
-    required String tableName,
-    required PokemonModel pokemon,
-  }) async {}
+  Future<List<Pokemon>> getAllPokemons();
 
-  Future updatePokemon({
+  Future<int> updatePokemon({
     required int id,
-    required PokemonModel pokemon,
-  }) async {}
+    required Pokemon pokemon,
+  });
 
-  Future deletePokemon(int id) async {}
+  Future<int> deletePokemon(int id);
 
-  Future deletePokemons() async {}
+  Future<int> deletePokemons();
 }

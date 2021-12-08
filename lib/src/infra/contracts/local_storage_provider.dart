@@ -1,25 +1,25 @@
 abstract class LocalStorageProvider {
+  //db.insert('keyName', value)
+  Future<int> insertItem(String tableName, Map<String, dynamic> values);
+
   //db.query('keyName')
-  Future getItem({
+  Future<Map<String, Object?>> getItem({
     required String tableName,
     required List<String> values,
     required int itemId,
-  }) async {}
+  });
 
-  Future getAllItems(String tableName) async {}
-
-  //db.insert('keyName', value)
-  Future insertItem(String tableName, Map<String, dynamic> values) async {}
+  Future<List<Map<String, Object?>>> getAllItems(String tableName);
 
   //db.update('keyName', value, where: 'id == ?', whereArgs: [item.id])
-  Future updateItem({
+  Future<int> updateItem({
     required String tableName,
     required Map<String, dynamic> values,
     required int itemId,
-  }) async {}
+  });
 
   //db.delete('keyName', value, where: 'id == ?', whereArgs: [item.id])
-  Future deleteItem(String tableName, int itemId) async {}
+  Future<int> deleteItem(String tableName, int itemId);
 
-  Future deleteTable(String tableName) async {}
+  Future<int> deleteTable(String tableName);
 }
