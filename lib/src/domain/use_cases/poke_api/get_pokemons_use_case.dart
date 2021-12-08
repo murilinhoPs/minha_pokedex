@@ -1,0 +1,21 @@
+import 'package:minha_pokedex/src/domain/entities/pokemon.dart';
+import 'package:minha_pokedex/src/domain/exceptions/pokemon_storage_exceptions.dart';
+import 'package:minha_pokedex/src/domain/repositories/poke_api_repository.dart';
+
+class GetPokemonsUseCase {
+  final PokeApiRepository pokeApiRepository;
+
+  GetPokemonsUseCase({
+    required this.pokeApiRepository,
+  });
+
+  Future<List<Pokemon>> call() async {
+    try {
+      return await pokeApiRepository.getAllPokemons();
+    } on CouldNotGetAllPokemons {
+      rethrow;
+    } catch (e) {
+      throw Exception('Unexpected error: ${e.toString()}');
+    }
+  }
+}
