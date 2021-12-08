@@ -49,8 +49,6 @@ class PokemonModel extends Pokemon {
     };
   }
 
-  String toJson() => json.encode(toMap());
-
   factory PokemonModel.fromMap(Map<String, dynamic> map) {
     return PokemonModel(
       id: map['_id'] != null ? map['_id'] : null,
@@ -60,6 +58,8 @@ class PokemonModel extends Pokemon {
       types: (map['types'] as String).split(','),
     );
   }
+
+  String toJson() => json.encode(toMap());
 
   factory PokemonModel.fromJson(String source) =>
       PokemonModel.fromMap(json.decode(source));
