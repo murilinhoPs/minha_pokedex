@@ -1,15 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:minha_pokedex/src/domain/entities/pokemon.dart';
 import 'package:minha_pokedex/src/domain/entities/pokemon_details.dart';
-import 'package:minha_pokedex/src/domain/entities/pokemon_stats.dart';
 import 'package:minha_pokedex/src/domain/exceptions/pokemon_api_exceptions.dart';
 import 'package:minha_pokedex/src/external/global_dio.dart';
-import 'package:minha_pokedex/src/external/poke_api/api_models/pokemon_details_model.dart';
+import 'package:minha_pokedex/src/external/poke_api/api_models/pokemon_details_api.dart';
 import 'package:minha_pokedex/src/external/poke_api/api_models/pokemon_list_response.dart';
 import 'package:minha_pokedex/src/infra/contracts/poke_api_provider.dart';
+import 'package:minha_pokedex/src/infra/mappers/map_pokemon_details_api_to_entities.dart';
 
 class PokeApiProviderImpl implements PokeApiProvider {
-  final GlobalDio client;
+  final GlobalHttpClient client;
 
   PokeApiProviderImpl({
     required this.client,
@@ -18,11 +18,9 @@ class PokeApiProviderImpl implements PokeApiProvider {
   @override
   Future<PokemonListResponse> getPokemonsSimpleList() async {
     try {
-      final pokemonListData = await client.dio.get(
+      final pokemonListData = await client.http.get(
         'pokemon/?offset=0&limit=60',
-      );
-
-      print('PokemonListData: ${pokemonListData.data}');
+      ); //TODO:Trocar o offset e o limit depois e colocar paginação (offset)
 
       if (pokemonListData.data == null) throw CouldNotGetPokemonsList();
 
@@ -37,68 +35,43 @@ class PokeApiProviderImpl implements PokeApiProvider {
     try {
       final pokemonFromApi = await getPokemonsSimpleList();
 
-      var apiList = <PokemonDetailsModel>[];
+      var apiList = <PokemonDetailsApi>[];
       var pokemonList = <Pokemon>[];
 
       for (var pokemonFromList in pokemonFromApi.pokemonsFromList!) {
-        final pokemonDetails = await client.dio.get('${pokemonFromList!.url}/');
+        final pokemonDetailsResponse = await client.http.get(
+          '${pokemonFromList!.url}/',
+        );
 
-        apiList.add(PokemonDetailsModel.fromJson(pokemonDetails.data));
+        final pokemonDetails = PokemonDetailsApi.fromJson(
+          pokemonDetailsResponse.data,
+        );
+
+        apiList.add(pokemonDetails);
       }
 
       for (var pokemonDetails in apiList) {
-        final pokemon = Pokemon(
-          name: pokemonDetails.name!,
-          imageUrl: pokemonDetails.sprites!.frontDefault!,
-          pokedexNumber: pokemonDetails.id!,
-          types: pokemonDetails.types!
-              .map(
-                (type) => type!.type!.name!,
-              )
-              .toList(),
-        );
+        final pokemon = pokemonDetails.mapPokemonDetailApiToPokemonEntity();
 
         pokemonList.add(pokemon);
       }
 
       return pokemonList;
     } catch (e) {
-      throw CouldNotGetPokemon();
+      throw CouldNotGetAllPokemons();
     }
   }
 
   @override
   Future<PokemonDetails> getPokemonDetails(int pokemonId) async {
     try {
-      final pokemonDetailsData = await client.dio.get('pokemon/$pokemonId');
+      final pokemonDetailsData = await client.http.get('pokemon/$pokemonId');
 
-      final pokemonDetails = PokemonDetailsModel.fromJson(
+      final pokemonDetails = PokemonDetailsApi.fromJson(
         pokemonDetailsData.data,
       );
 
-      final pokemon = PokemonDetails(
-        name: pokemonDetails.name!,
-        imageUrl: pokemonDetails.sprites!.frontDefault!,
-        pokedexNumber: pokemonDetails.id!,
-        types: pokemonDetails.types!
-            .map(
-              (type) => type!.type!.name!,
-            )
-            .toList(),
-        weight: pokemonDetails.weight!,
-        height: pokemonDetails.height!,
-        stats: pokemonDetails.stats!
-            .map(
-              (stat) => PokemonStats(
-                baseStat: stat!.baseStat!,
-                effort: stat.effort!,
-                name: stat.stat!.name!,
-              ),
-            )
-            .toList(),
-      );
-
-      return pokemon;
+      return pokemonDetails.mapPokemonDetailApiToPokemonDetails();
     } on DioError catch (_) {
       throw CouldNotGetPokemon();
     }
