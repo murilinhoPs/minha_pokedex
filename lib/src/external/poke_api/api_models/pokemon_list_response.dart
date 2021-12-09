@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:minha_pokedex/src/external/poke_api/api_models/pokemon_from_list.dart';
+import 'package:minha_pokedex/src/external/poke_api/api_models/pokemon_from_api_list.dart';
 
 part 'pokemon_list_response.g.dart';
 
@@ -9,7 +9,7 @@ class PokemonListResponse {
   final String? next;
   final String? previous;
   @JsonKey(name: 'results')
-  final List<PokemonFromList?>? pokemonsFromList;
+  final List<PokemonFromApiList?>? pokemonsFromList;
 
   PokemonListResponse({
     this.count,

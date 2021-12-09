@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'pokemon_details_model.dart';
+part of 'pokemon_details_api.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-PokemonDetailsModel _$PokemonDetailsModelFromJson(Map<String, dynamic> json) =>
-    PokemonDetailsModel(
+PokemonDetailsApi _$PokemonDetailsApiFromJson(Map<String, dynamic> json) =>
+    PokemonDetailsApi(
       abilities: (json['abilities'] as List<dynamic>?)
           ?.map((e) =>
               e == null ? null : Ability.fromJson(e as Map<String, dynamic>))
@@ -48,8 +48,7 @@ PokemonDetailsModel _$PokemonDetailsModelFromJson(Map<String, dynamic> json) =>
       weight: json['weight'] as int?,
     );
 
-Map<String, dynamic> _$PokemonDetailsModelToJson(
-        PokemonDetailsModel instance) =>
+Map<String, dynamic> _$PokemonDetailsApiToJson(PokemonDetailsApi instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

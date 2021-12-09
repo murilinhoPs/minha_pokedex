@@ -8,10 +8,10 @@ import 'package:minha_pokedex/src/external/poke_api/api_models/move.dart';
 import 'package:minha_pokedex/src/external/poke_api/api_models/stats.dart';
 import 'package:minha_pokedex/src/external/poke_api/api_models/type.dart';
 
-part 'pokemon_details_model.g.dart';
+part 'pokemon_details_api.g.dart';
 
 @JsonSerializable()
-class PokemonDetailsModel {
+class PokemonDetailsApi {
   int? id;
   String? name;
   int? baseExperience;
@@ -29,7 +29,7 @@ class PokemonDetailsModel {
   List<TypeInfo?>? types;
   List<Stats?>? stats;
 
-  PokemonDetailsModel({
+  PokemonDetailsApi({
     this.abilities,
     this.baseExperience,
     this.gameIndices,
@@ -48,8 +48,8 @@ class PokemonDetailsModel {
     this.weight,
   });
 
-  factory PokemonDetailsModel.fromJson(Map<String, dynamic> json) =>
-      _$PokemonDetailsModelFromJson(json);
+  factory PokemonDetailsApi.fromJson(Map<String, dynamic> json) =>
+      _$PokemonDetailsApiFromJson(json);
 
-  Map<String, dynamic> toJson() => _$PokemonDetailsModelToJson(this);
+  Map<String, dynamic> toJson() => _$PokemonDetailsApiToJson(this);
 }

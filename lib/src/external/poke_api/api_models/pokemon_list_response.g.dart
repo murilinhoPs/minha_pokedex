@@ -14,7 +14,7 @@ PokemonListResponse _$PokemonListResponseFromJson(Map<String, dynamic> json) =>
       pokemonsFromList: (json['results'] as List<dynamic>?)
           ?.map((e) => e == null
               ? null
-              : PokemonFromList.fromJson(e as Map<String, dynamic>))
+              : PokemonFromApiList.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
