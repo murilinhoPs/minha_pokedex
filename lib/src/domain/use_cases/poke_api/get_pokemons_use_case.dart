@@ -12,7 +12,7 @@ class GetPokemonsUseCase {
   Future<List<Pokemon>> call() async {
     try {
       return await pokeApiRepository.getAllPokemons();
-    } on CouldNotGetAllPokemons {
+    } on CouldNotGetFavPokemons {
       rethrow;
     } catch (e) {
       throw Exception('Unexpected error: ${e.toString()}');

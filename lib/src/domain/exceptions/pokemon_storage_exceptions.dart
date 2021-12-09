@@ -3,12 +3,12 @@ abstract class PokemonsStorageExceptions implements Exception {
   PokemonsStorageExceptions(this.message) : super();
 }
 
-class CouldNotGetAllPokemons extends PokemonsStorageExceptions {
-  CouldNotGetAllPokemons() : super('CouldNotGetAllPokemons');
+class CouldNotGetFavPokemons extends PokemonsStorageExceptions {
+  CouldNotGetFavPokemons() : super('CouldNotGetAllPokemons');
 }
 
-class CouldNotGetPokemon extends PokemonsStorageExceptions {
-  CouldNotGetPokemon() : super('CouldNotGetPokemon with details');
+class CouldNotGetFavPokemon extends PokemonsStorageExceptions {
+  CouldNotGetFavPokemon() : super('CouldNotGetPokemon with details');
 }
 
 class CouldNotAddFavPokemon extends PokemonsStorageExceptions {
@@ -22,12 +22,12 @@ class CouldNotUpdateFavPokemon extends PokemonsStorageExceptions {
         );
 }
 
-class CouldNotDeletePokemonFromFav extends PokemonsStorageExceptions {
-  CouldNotDeletePokemonFromFav() : super('CouldNotDeletePokemonFromFav');
+class CouldNotDeleteFavPokemon extends PokemonsStorageExceptions {
+  CouldNotDeleteFavPokemon() : super('CouldNotDeletePokemonFromFav');
 }
 
-class CouldNotDeleteAllPokemons extends PokemonsStorageExceptions {
-  CouldNotDeleteAllPokemons()
+class CouldNotDeleteFavPokemons extends PokemonsStorageExceptions {
+  CouldNotDeleteFavPokemons()
       : super(
           'CouldNotDeleteAllPokemons from fav storage',
         );

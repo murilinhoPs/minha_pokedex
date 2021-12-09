@@ -39,7 +39,7 @@ class FavPokemonsStorageRepositoryImpl implements FavPokemonsStorageRepository {
 
       return PokemonModel.fromMap(pokemonMap);
     } catch (_) {
-      throw CouldNotGetPokemon();
+      throw CouldNotGetFavPokemon();
     }
   }
 
@@ -53,7 +53,7 @@ class FavPokemonsStorageRepositoryImpl implements FavPokemonsStorageRepository {
           )
           .toList();
     } catch (_) {
-      throw CouldNotGetAllPokemons();
+      throw CouldNotGetFavPokemons();
     }
   }
 
@@ -83,7 +83,7 @@ class FavPokemonsStorageRepositoryImpl implements FavPokemonsStorageRepository {
         id,
       );
     } catch (_) {
-      throw CouldNotDeletePokemonFromFav();
+      throw CouldNotDeleteFavPokemon();
     }
   }
 
@@ -92,7 +92,7 @@ class FavPokemonsStorageRepositoryImpl implements FavPokemonsStorageRepository {
     try {
       return await localStorage.deleteTable(favPokemonsTable);
     } catch (_) {
-      throw CouldNotDeleteAllPokemons();
+      throw CouldNotDeleteFavPokemons();
     }
   }
 }

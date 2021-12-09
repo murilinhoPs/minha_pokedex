@@ -11,7 +11,7 @@ class DeleteFavPokemonUsecase {
   Future<int> call(int pokemonId) async {
     try {
       return await favPokemonsStorageRepository.deletePokemon(pokemonId);
-    } on CouldNotDeletePokemonFromFav {
+    } on CouldNotDeleteFavPokemon {
       rethrow;
     } catch (e) {
       throw Exception('Unexpected error: ${e.toString()}');
