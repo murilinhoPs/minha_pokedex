@@ -340,13 +340,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
-  nuvigator:
-    dependency: "direct main"
-    description:
-      name: nuvigator
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.1"
   package_config:
     dependency: transitive
     description:

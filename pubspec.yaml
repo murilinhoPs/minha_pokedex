@@ -22,7 +22,6 @@ dependencies:
   bloc: ^8.0.1
   flutter_bloc: ^8.0.0
   get_it: ^7.2.0
-  nuvigator:
   sqflite_common_ffi:
 
 dev_dependencies:
