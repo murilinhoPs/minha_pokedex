@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:minha_pokedex/src/domain/entities/pokemon.dart';
 import 'package:minha_pokedex/src/domain/entities/pokemon_details.dart';
 import 'package:minha_pokedex/src/domain/exceptions/pokemon_api_exceptions.dart';
-import 'package:minha_pokedex/src/external/global_dio.dart';
+import 'package:minha_pokedex/src/external/global_http_client.dart';
 import 'package:minha_pokedex/src/external/poke_api/api_models/pokemon_details_api.dart';
 import 'package:minha_pokedex/src/external/poke_api/api_models/pokemon_list_response.dart';
 import 'package:minha_pokedex/src/infra/contracts/poke_api_provider.dart';
