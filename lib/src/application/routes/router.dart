@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:minha_pokedex/src/application/pages/fav_pokemons/fav_pokemons_page.dart';
 import 'package:minha_pokedex/src/application/pages/pokedex_home/pokedex_home_page.dart';
@@ -10,4 +11,29 @@ class AppRouter {
     RoutesNames.pokemonDetailsPage: (context) => PokedexPokemonDetailsPage(),
     RoutesNames.favPokemonsPage: (context) => FavPokemonsPage(),
   };
+
+  static Route generateRoutes(RouteSettings settings) {
+    switch (settings.name) {
+      case RoutesNames.homePage:
+        return CupertinoPageRoute(
+          settings: settings,
+          builder: (context) => PokedexHomePage(),
+        );
+      case RoutesNames.pokemonDetailsPage:
+        return CupertinoPageRoute(
+          settings: settings,
+          builder: (context) => PokedexPokemonDetailsPage(),
+        );
+      case RoutesNames.favPokemonsPage:
+        return CupertinoPageRoute(
+          settings: settings,
+          builder: (context) => FavPokemonsPage(),
+        );
+      default:
+        return CupertinoPageRoute(
+          settings: settings,
+          builder: (context) => PokedexHomePage(),
+        );
+    }
+  }
 }

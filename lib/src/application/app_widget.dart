@@ -15,7 +15,7 @@ class AppWidget extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       initialRoute: RoutesNames.homePage,
-      routes: AppRouter.routes,
+      onGenerateRoute: AppRouter.generateRoutes,
       // home: MyHomePage(),
     );
   }
