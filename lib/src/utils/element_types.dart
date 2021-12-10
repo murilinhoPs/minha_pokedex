@@ -1,15 +1,15 @@
 import 'package:flutter/painting.dart';
 
-const elementTypes = {
-  'grass': Color(0xff78C850),
+const elementTypesColors = {
+  'grass': Color(0xFF6FB84B),
   'poison': Color(0xffA040A0),
   'fire': Color(0xffF08030),
-  'flying': Color(0xffA890F000),
+  'flying': Color(0xFF909ADD),
   'water': Color(0xff6890F0),
   'bug': Color(0xff6D7815),
-  'normal': Color(0xffA8A878),
+  'normal': Color(0xFFA5A58F),
   'electric': Color(0xffF8D030),
-  'ground': Color(0xffE0C068),
+  'ground': Color(0xFFD1AF51),
   'fighting': Color(0xffC03028),
   'psychic': Color(0xffF85888),
   'rock': Color(0xffB8A038),
@@ -19,4 +19,25 @@ const elementTypes = {
   'fairy': Color(0xffEE99AC),
   'dark': Color(0xff705848),
   'steel': Color(0xffB8B8D0),
+};
+
+const elementTypesLightColors = {
+  'grass': Color(0xFFB8D1AB),
+  'poison': Color(0xFFBDA3BD),
+  'fire': Color(0xFFF0BD98),
+  'flying': Color(0xFFCCC1F000),
+  'water': Color(0xFFC0CEF0),
+  'bug': Color(0xFFBCCA99),
+  'normal': Color(0xFFDFDFD9),
+  'electric': Color(0xFFFFEFB1),
+  'ground': Color(0xFFFFD297),
+  'fighting': Color(0xFFBE9896),
+  'psychic': Color(0xFFFFAAC4),
+  'rock': Color(0xFFB9B086),
+  'ice': Color(0xFFCCE2E2),
+  'ghost': Color(0xFFAB9DC2),
+  'dragon': Color(0xFF9B8CBD),
+  'fairy': Color(0xFFF5C0CC),
+  'dark': Color(0xFFB9ACA4),
+  'steel': Color(0xFFE2E2EB),
 };
