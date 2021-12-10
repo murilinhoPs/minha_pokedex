@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:minha_pokedex/src/application/pages/home.dart';
 import 'package:minha_pokedex/src/application/routes/router.dart';
 import 'package:minha_pokedex/src/application/routes/routes_names.dart';
+import 'package:minha_pokedex/src/utils/strings.dart';
 
 class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'My Pokedex',
+      title: Strings.pokedex,
       theme: ThemeData(
         primarySwatch: Colors.red,
-        appBarTheme: Theme.of(context).appBarTheme.copyWith(
-              backgroundColor: Colors.red[600],
-            ),
-        scaffoldBackgroundColor: Colors.grey[800],
+        scaffoldBackgroundColor: Colors.grey[900],
+        brightness: Brightness.dark,
       ),
+      debugShowCheckedModeBanner: false,
       initialRoute: RoutesNames.homePage,
       routes: AppRouter.routes,
       // home: MyHomePage(),
