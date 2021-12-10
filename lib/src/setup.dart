@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:minha_pokedex/src/application/pages/pokedex_home/bloc/pokedex_search_bloc.dart';
 import 'package:minha_pokedex/src/domain/repositories/fav_pokemons_storage_repository.dart';
 import 'package:minha_pokedex/src/domain/repositories/poke_api_repository.dart';
 import 'package:minha_pokedex/src/domain/use_cases/fav_pokemons/add_fav_pokemon_use_case.dart';
@@ -56,25 +57,25 @@ void _setupInfra() {
 }
 
 void _setupDomain() {
-  GetIt.I.registerFactory<GetFavPokemonsUsecase>(
+  GetIt.I.registerLazySingleton<GetFavPokemonsUsecase>(
     () => GetFavPokemonsUsecase(
       favPokemonsStorageRepository: GetIt.I.get<FavPokemonsStorageRepository>(),
     ),
   );
 
-  GetIt.I.registerFactory<AddFavPokemonUsecase>(
+  GetIt.I.registerLazySingleton<AddFavPokemonUsecase>(
     () => AddFavPokemonUsecase(
       favPokemonsStorageRepository: GetIt.I.get<FavPokemonsStorageRepository>(),
     ),
   );
 
-  GetIt.I.registerFactory<DeleteFavPokemonUsecase>(
+  GetIt.I.registerLazySingleton<DeleteFavPokemonUsecase>(
     () => DeleteFavPokemonUsecase(
       favPokemonsStorageRepository: GetIt.I.get<FavPokemonsStorageRepository>(),
     ),
   );
 
-  GetIt.I.registerFactory<DeleteFavPokemonsUsecase>(
+  GetIt.I.registerLazySingleton<DeleteFavPokemonsUsecase>(
     () => DeleteFavPokemonsUsecase(
       favPokemonsStorageRepository: GetIt.I.get<FavPokemonsStorageRepository>(),
     ),
@@ -93,4 +94,10 @@ void _setupDomain() {
   );
 }
 
-void _setupControllers() {}
+void _setupControllers() {
+  GetIt.I.registerLazySingleton<PokedexSearchBloc>(
+    () => PokedexSearchBloc(
+      getPokemons: GetIt.I.get<GetPokemonsUseCase>(),
+    ),
+  );
+}
