@@ -30,8 +30,10 @@ class PokemonCardContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         _buildPokemonImage(),
-        SizedBox(width: 36.0),
-        _buildPokemonDetails(),
+        SizedBox(width: 32.0),
+        Expanded(
+          child: _buildPokemonDetails(),
+        ),
       ],
     );
   }
@@ -52,42 +54,41 @@ class PokemonCardContent extends StatelessWidget {
     final types = pokemon.types.map((type) {
       final color = elementTypesColors[type];
 
-      return Padding(
-        padding: const EdgeInsets.only(right: 8.0),
-        child: PokemonTypeWidget(
-          name: type.toCapitalized(),
-          color: color!,
-        ),
+      return PokemonTypeWidget(
+        name: type.toCapitalized(),
+        color: color!,
       );
     }).toList();
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      mainAxisSize: MainAxisSize.max,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          _getFullPokemonId(pokemon.pokedexNumber),
-          style: TextStyle(
-            letterSpacing: 1,
-            color: Colors.red[600],
-            fontWeight: FontWeight.bold,
-          ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              _getFullPokemonId(pokemon.pokedexNumber),
+              style: TextStyle(
+                letterSpacing: 1,
+                color: Colors.red[600],
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              pokemon.name.toCapitalized(),
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                height: 1.0,
+                fontSize: 24,
+              ),
+            ),
+            SizedBox(height: 8.0)
+          ],
         ),
-        // SizedBox(height: 4.0),
-        Text(
-          pokemon.name.toCapitalized(),
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-            height: 0.8,
-            fontSize: 24,
-          ),
-        ),
-        SizedBox(height: 4.0),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.center,
+        Wrap(
+          direction: Axis.vertical,
+          spacing: 8.0,
           children: [
             ...types,
           ],

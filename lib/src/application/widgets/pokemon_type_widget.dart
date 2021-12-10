@@ -20,12 +20,15 @@ class PokemonTypeWidget extends StatelessWidget {
         ),
       ),
       color: color.withOpacity(0.9),
-      child: Padding(
+      child: Container(
+        width: 72,
         padding: const EdgeInsets.symmetric(
-          horizontal: 16.0,
+          // horizontal: 16.0,
+          vertical: 1.4,
         ),
         child: Text(
           name,
+          textAlign: TextAlign.center,
           style: TextStyle(
             height: 1.4,
             fontSize: 14,
