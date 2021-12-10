@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:minha_pokedex/src/application/pages/pokedex_home/widgets/search_bar.dart';
+import 'package:minha_pokedex/src/utils/assets.dart';
 import 'package:minha_pokedex/src/utils/strings.dart';
 
 class PokedexHeader extends StatelessWidget {
@@ -16,17 +17,17 @@ class PokedexHeader extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              Strings.pokedex,
+              Strings.pokedex.toUpperCase(),
               style: TextStyle(
                 letterSpacing: 2.8,
                 color: Colors.white,
-                fontSize: 28,
+                fontSize: 36,
               ),
             ),
-            Icon(
-              Icons.circle,
-              color: Colors.white,
-            ),
+            Image.asset(
+              Assets.pokeball,
+              height: 32,
+            )
           ],
         ),
         SizedBox(height: 12.0),

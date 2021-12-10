@@ -30,7 +30,7 @@ class PokemonCardContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         _buildPokemonImage(),
-        SizedBox(width: 32.0),
+        SizedBox(width: 20.0),
         Expanded(
           child: _buildPokemonDetails(),
         ),
@@ -41,11 +41,10 @@ class PokemonCardContent extends StatelessWidget {
   Widget _buildPokemonImage() {
     return Transform.scale(
       scale: 1.6,
-      origin: Offset(-10, 0),
+      origin: Offset(-8, 0),
       child: Image.network(
         pokemon.imageUrl,
-        fit: BoxFit.fitHeight,
-        scale: 1.6,
+        scale: 1.8,
       ),
     );
   }
@@ -77,7 +76,7 @@ class PokemonCardContent extends StatelessWidget {
             Text(
               pokemon.name.toCapitalized(),
               style: TextStyle(
-                color: Colors.black,
+                // color: Colors.black,
                 fontWeight: FontWeight.bold,
                 height: 1.0,
                 fontSize: 24,
@@ -88,6 +87,8 @@ class PokemonCardContent extends StatelessWidget {
         ),
         Wrap(
           direction: Axis.vertical,
+          crossAxisAlignment: WrapCrossAlignment.start,
+          alignment: WrapAlignment.start,
           spacing: 8.0,
           children: [
             ...types,

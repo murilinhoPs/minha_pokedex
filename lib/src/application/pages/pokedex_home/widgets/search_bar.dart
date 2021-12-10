@@ -5,11 +5,8 @@ class SearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(
-          color: Colors.white,
-          width: 1,
-        ),
         borderRadius: BorderRadius.circular(12.0),
+        color: Colors.grey[800],
       ),
       child: Row(
         mainAxisSize: MainAxisSize.max,
@@ -33,12 +30,13 @@ class SearchBar extends StatelessWidget {
           Expanded(
             child: TextFormField(
               decoration: InputDecoration(
+                enabled: false,
                 isDense: true,
-                hintText: 'Search Pokemon, Move, Ability etc',
+                hintText: 'Desabilitado...',
                 contentPadding: EdgeInsets.zero,
                 hintStyle: TextStyle(
                   fontSize: 14,
-                  color: Colors.white,
+                  // color: Colors.white,
                   height: 1,
                 ),
                 border: InputBorder.none,

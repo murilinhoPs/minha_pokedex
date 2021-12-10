@@ -15,7 +15,7 @@ class PokemonList extends StatelessWidget {
     return ListView.separated(
       itemCount: pokemons.length,
       shrinkWrap: true,
-      separatorBuilder: (context, index) => SizedBox(height: 12.0),
+      separatorBuilder: (context, index) => SizedBox(height: 16.0),
       itemBuilder: (context, index) => PokemonCard(
         pokemon: pokemons[index],
         onTap: () {},

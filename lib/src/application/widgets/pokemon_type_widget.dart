@@ -21,7 +21,7 @@ class PokemonTypeWidget extends StatelessWidget {
       ),
       color: color.withOpacity(0.9),
       child: Container(
-        width: 72,
+        width: 64,
         padding: const EdgeInsets.symmetric(
           // horizontal: 16.0,
           vertical: 1.4,
