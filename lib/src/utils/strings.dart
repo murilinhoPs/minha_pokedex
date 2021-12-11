@@ -4,4 +4,5 @@ class Strings {
       'Procure os pokemons com o número deles na national Dex ou \npelo seu próprio nome';
   static const String loading = 'Carregando...';
   static const String reloadPokedex = 'Recarregar pokédex';
+  static const String reloadPokemonDetails = 'Recarregar detalhes do pokémon';
 }

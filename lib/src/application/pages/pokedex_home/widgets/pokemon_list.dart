@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:minha_pokedex/src/application/routes/routes_names.dart';
 import 'package:minha_pokedex/src/application/widgets/pokemon_card.dart';
 import 'package:minha_pokedex/src/domain/entities/pokemon.dart';
 
@@ -18,7 +19,13 @@ class PokemonList extends StatelessWidget {
       separatorBuilder: (context, index) => SizedBox(height: 16.0),
       itemBuilder: (context, index) => PokemonCard(
         pokemon: pokemons[index],
-        onTap: () {},
+        onTap: () {
+          Navigator.pushNamed(
+            context,
+            RoutesNames.pokemonDetailsPage,
+            arguments: index + 1,
+          );
+        },
       ),
     );
   }
