@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:minha_pokedex/src/domain/entities/pokemon_details.dart';
@@ -15,6 +16,7 @@ class PokemonDetailsBloc
   }) : super(PokemonDetailsInitial()) {
     on<PokemonDetailsReceived>(_onPokemonDetailsFecthed);
     on<PokemonDetailsRetrieveIsFavorite>(_onPokemonDetailsCheckFavorite);
+    on<PokemonDetailsChangeIsFavorite>(_onPokemonDetailsChangeIsFavorite);
   }
 
   Future<void> _onPokemonDetailsFecthed(
@@ -24,21 +26,49 @@ class PokemonDetailsBloc
     emit(PokemonDetailsLoadInProgress());
 
     try {
-      final pokemon = await getPokemonDetails(event.pokemonId);
+      final id = pokemonCurrentId(event.pokemonId);
+
+      final pokemon = await getPokemonDetails(id);
 
       return emit(
-        PokemonDetailsLoadSuccess(pokemon: pokemon),
+        PokemonDetailsLoadSuccess(
+          pokemon: pokemon,
+        ),
       );
     } catch (_) {
       emit(PokemonDetailsLoadFailed());
     }
   }
 
+  int pokemonCurrentId(int? currentId) {
+    if (currentId == null) {
+      final min = 1;
+      final max = 899;
+
+      return min + Random().nextInt(max - min);
+    }
+
+    return currentId;
+  }
+
+  Future<void> _onPokemonDetailsChangeIsFavorite(
+    PokemonDetailsChangeIsFavorite event,
+    Emitter<PokemonDetailsState> emit,
+  ) async {
+    return emit(
+      PokemonDetailsCheckIsFavorite(
+        isFavorite: event.setFavorite,
+      ),
+    );
+  }
+
   Future<void> _onPokemonDetailsCheckFavorite(
     PokemonDetailsRetrieveIsFavorite event,
     Emitter<PokemonDetailsState> emit,
   ) async {
-    final isFavorite = false; //TODO: Get from local storage
+    final isSaved = false; //TODO: Get from local storage on initState
+
+    final isFavorite = isSaved ? isSaved : false;
 
     return emit(
       PokemonDetailsCheckIsFavorite(
