@@ -58,6 +58,7 @@ class _PokedexHomePageState extends State<PokedexHomePage> {
                   Expanded(
                     child: _buildPokemonCards(),
                   ),
+                  SizedBox(height: 72.0),
                 ],
               ),
             ),
