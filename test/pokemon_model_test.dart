@@ -4,7 +4,6 @@ import 'package:minha_pokedex/src/infra/models/pokemon_model.dart';
 void main() {
   test('Default test', () {
     final model = PokemonModel(
-      id: 1,
       name: 'pokemon',
       imageUrl: 'nada',
       pokedexNumber: 000,

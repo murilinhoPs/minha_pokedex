@@ -1,11 +1,14 @@
 import 'package:get_it/get_it.dart';
+import 'package:minha_pokedex/src/application/pages/fav_pokemons/bloc/fav_pokemons_list_bloc.dart';
 import 'package:minha_pokedex/src/application/pages/pokedex_home/bloc/pokedex_search_bloc.dart';
+import 'package:minha_pokedex/src/application/pages/pokedex_pokemon_details/bloc/fav_icon_bloc/favorite_icon_bloc.dart';
 import 'package:minha_pokedex/src/application/pages/pokedex_pokemon_details/bloc/pokemon_details_bloc.dart';
 import 'package:minha_pokedex/src/domain/repositories/fav_pokemons_storage_repository.dart';
 import 'package:minha_pokedex/src/domain/repositories/poke_api_repository.dart';
 import 'package:minha_pokedex/src/domain/use_cases/fav_pokemons/add_fav_pokemon_use_case.dart';
 import 'package:minha_pokedex/src/domain/use_cases/fav_pokemons/delete_fav_pokemons_use_case.dart';
 import 'package:minha_pokedex/src/domain/use_cases/fav_pokemons/delete_fav_pokemon_use_case.dart';
+import 'package:minha_pokedex/src/domain/use_cases/fav_pokemons/get_fav_pokemon_use_case.dart';
 import 'package:minha_pokedex/src/domain/use_cases/fav_pokemons/get_fav_pokemons_use_case.dart';
 import 'package:minha_pokedex/src/domain/use_cases/poke_api/get_pokemon_details_use_case.dart';
 import 'package:minha_pokedex/src/domain/use_cases/poke_api/get_pokemons_use_case.dart';
@@ -64,6 +67,12 @@ void _setupDomain() {
     ),
   );
 
+  GetIt.I.registerLazySingleton<GetFavPokemonUsecase>(
+    () => GetFavPokemonUsecase(
+      favPokemonsStorageRepository: GetIt.I.get<FavPokemonsStorageRepository>(),
+    ),
+  );
+
   GetIt.I.registerLazySingleton<AddFavPokemonUsecase>(
     () => AddFavPokemonUsecase(
       favPokemonsStorageRepository: GetIt.I.get<FavPokemonsStorageRepository>(),
@@ -105,6 +114,20 @@ void _setupControllers() {
   GetIt.I.registerLazySingleton<PokemonDetailsBloc>(
     () => PokemonDetailsBloc(
       getPokemonDetails: GetIt.I.get<GetPokemonDetailsUseCase>(),
+    ),
+  );
+
+  GetIt.I.registerLazySingleton<FavoriteIconBloc>(
+    () => FavoriteIconBloc(
+      addFavPokemon: GetIt.I.get<AddFavPokemonUsecase>(),
+      deleteFavPokemon: GetIt.I.get<DeleteFavPokemonUsecase>(),
+      getFavPokemon: GetIt.I.get<GetFavPokemonUsecase>(),
+    ),
+  );
+
+  GetIt.I.registerLazySingleton<FavPokemonsListBloc>(
+    () => FavPokemonsListBloc(
+      getFavPokemons: GetIt.I.get<GetFavPokemonsUsecase>(),
     ),
   );
 }
