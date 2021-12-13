@@ -23,7 +23,7 @@ class PokemonList extends StatelessWidget {
           Navigator.pushNamed(
             context,
             RoutesNames.pokemonDetailsPage,
-            arguments: index + 1,
+            arguments: pokemons[index].pokedexNumber,
           );
         },
       ),

@@ -4,9 +4,10 @@ import 'package:get_it/get_it.dart';
 import 'package:minha_pokedex/src/application/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:minha_pokedex/src/application/pages/pokedex_home/bloc/pokedex_search_bloc.dart';
 import 'package:minha_pokedex/src/application/pages/pokedex_home/widgets/pokedex_header.dart';
-import 'package:minha_pokedex/src/application/pages/pokedex_home/widgets/pokemon_list.dart';
+import 'package:minha_pokedex/src/application/widgets/pokemon_list.dart';
 import 'package:minha_pokedex/src/application/widgets/loading_indicator.dart';
 import 'package:minha_pokedex/src/application/widgets/reload_content_button.dart';
+import 'package:minha_pokedex/src/domain/use_cases/fav_pokemons/delete_fav_pokemons_use_case.dart';
 import 'package:minha_pokedex/src/utils/assets.dart';
 import 'package:minha_pokedex/src/utils/strings.dart';
 
@@ -16,11 +17,11 @@ class PokedexHomePage extends StatefulWidget {
 }
 
 class _PokedexHomePageState extends State<PokedexHomePage> {
-  final pokedexSearch = GetIt.I.get<PokedexSearchBloc>();
+  final pokedexSearchBloc = GetIt.I.get<PokedexSearchBloc>();
 
   @override
   void initState() {
-    pokedexSearch.add(
+    pokedexSearchBloc.add(
       PokedexSearchStarted(),
     );
     super.initState();
@@ -58,7 +59,7 @@ class _PokedexHomePageState extends State<PokedexHomePage> {
                   Expanded(
                     child: _buildPokemonCards(),
                   ),
-                  SizedBox(height: 72.0),
+                  SizedBox(height: 64.0),
                 ],
               ),
             ),
@@ -74,7 +75,7 @@ class _PokedexHomePageState extends State<PokedexHomePage> {
 
   Widget _buildPokemonCards() {
     return BlocBuilder<PokedexSearchBloc, PokedexSearchState>(
-      bloc: pokedexSearch,
+      bloc: pokedexSearchBloc,
       builder: (context, state) {
         if (state is PokedexSearchLoadSuccess) {
           final pokemonsList = state.pokemonsFromPokedex;
@@ -86,7 +87,7 @@ class _PokedexHomePageState extends State<PokedexHomePage> {
 
         if (state is PokedexSearchLoadFailure) {
           return ReloadContentButton(
-            onReload: () => pokedexSearch.add(
+            onReload: () => pokedexSearchBloc.add(
               PokedexSearchStarted(),
             ),
             reloadText: Strings.reloadPokedex,

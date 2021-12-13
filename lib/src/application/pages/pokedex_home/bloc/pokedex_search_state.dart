@@ -20,7 +20,10 @@ class PokedexSearchLoadSuccess extends PokedexSearchState {
   });
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [
+        pokemonsFromPokedex,
+        currentPageOffest,
+      ];
 }
 
 class PokedexSearchLoadFailure extends PokedexSearchState {}
