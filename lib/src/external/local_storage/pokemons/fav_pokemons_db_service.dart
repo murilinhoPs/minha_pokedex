@@ -28,7 +28,7 @@ class FavPokemonsDbService {
     final path = join(dbDirectory.path, databasesPath);
 
     try {
-      await Directory(databasesPath).create(recursive: true);
+      await dbDirectory.create(recursive: true);
 
       return await openDatabase(
         path,
@@ -41,13 +41,12 @@ class FavPokemonsDbService {
   }
 
   Future<void> _createDb(Database db, int version) async {
-    final idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
-    final intType = 'INTEGER NOT NULL';
+    final intType = 'INTEGER';
     final textType = 'TEXT NOT NULL';
 
     await db.execute(
       '''CREATE TABLE $favPokemonsTable (
-      ${FavPokemonsFields.id} $idType,
+      ${FavPokemonsFields.id} $intType,
       ${FavPokemonsFields.pokedexNumber} $intType,
       ${FavPokemonsFields.name} $textType,
       ${FavPokemonsFields.imageUrl} $textType,
