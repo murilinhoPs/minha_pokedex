@@ -17,7 +17,7 @@ class PokemonModel extends Pokemon {
     required this.pokedexNumber,
     required this.types,
   }) : super(
-          id: id,
+          id: pokedexNumber,
           name: name,
           imageUrl: imageUrl,
           pokedexNumber: pokedexNumber,

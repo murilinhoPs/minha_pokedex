@@ -6,7 +6,7 @@ class Pokemon {
   final List<String> types;
 
   const Pokemon({
-    this.id,
+    required this.id,
     required this.name,
     required this.imageUrl,
     required this.pokedexNumber,

@@ -6,6 +6,7 @@ import 'package:minha_pokedex/src/external/poke_api/api_models/pokemon_details_a
 extension MapPokemonDetailsApiToEnties on PokemonDetailsApi {
   Pokemon mapPokemonDetailApiToPokemonEntity() {
     return Pokemon(
+      id: id,
       name: name!,
       imageUrl: sprites!.frontDefault!,
       pokedexNumber: id!,
