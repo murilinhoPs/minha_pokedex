@@ -1,5 +1,6 @@
 part of 'pokemon_details_bloc.dart';
 
+@immutable
 abstract class PokemonDetailsEvent extends Equatable {
   @override
   List<Object?> get props => [];
@@ -15,20 +16,5 @@ class PokemonDetailsReceived extends PokemonDetailsEvent {
   @override
   List<Object?> get props => [
         pokemonId,
-      ];
-}
-
-class PokemonDetailsRetrieveIsFavorite extends PokemonDetailsEvent {}
-
-class PokemonDetailsChangeIsFavorite extends PokemonDetailsEvent {
-  final bool setFavorite;
-
-  PokemonDetailsChangeIsFavorite({
-    required this.setFavorite,
-  });
-
-  @override
-  List<Object?> get props => [
-        setFavorite,
       ];
 }
