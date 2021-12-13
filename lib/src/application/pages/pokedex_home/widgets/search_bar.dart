@@ -32,7 +32,7 @@ class SearchBar extends StatelessWidget {
               decoration: InputDecoration(
                 enabled: false,
                 isDense: true,
-                hintText: 'Desabilitado...',
+                hintText: 'Deactivated...',
                 contentPadding: EdgeInsets.zero,
                 hintStyle: TextStyle(
                   fontSize: 14,

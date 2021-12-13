@@ -31,15 +31,15 @@ class PokedexHeader extends StatelessWidget {
           ],
         ),
         SizedBox(height: 12.0),
-        Text(
-          Strings.searchInPokedex,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 11.0,
-          ),
-        ),
-        SizedBox(height: 12.0),
+        // Text(
+        //   Strings.searchInPokedex,
+        //   style: TextStyle(
+        //     color: Colors.white,
+        //     fontSize: 11.0,
+        //   ),
+        // ),
         SearchBar(),
+        SizedBox(height: 12.0),
       ],
     );
   }
