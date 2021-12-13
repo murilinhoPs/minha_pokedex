@@ -27,7 +27,7 @@ class LocalStorageProviderImpl implements LocalStorageProvider {
       final resultMaps = await db.query(
         tableName,
         columns: values,
-        where: '$itemId = ?',
+        where: '_id = ?',
         whereArgs: [itemId],
       );
 
@@ -55,7 +55,7 @@ class LocalStorageProviderImpl implements LocalStorageProvider {
     return await db.update(
       tableName,
       values,
-      where: '$itemId = ?',
+      where: '_id = ?',
       whereArgs: [itemId],
     );
   }
@@ -66,7 +66,7 @@ class LocalStorageProviderImpl implements LocalStorageProvider {
 
     return await db.delete(
       tableName,
-      where: '$itemId = ?',
+      where: '_id = ?',
       whereArgs: [itemId],
     );
   }

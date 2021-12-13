@@ -18,12 +18,12 @@ class FavPokemonsStorageRepositoryImpl implements FavPokemonsStorageRepository {
   }) async {
     final pokemonModel = pokemon.mapPokemonEntityToModel();
     try {
-      final id = await localStorage.insertItem(
+      await localStorage.insertItem(
         favPokemonsTable,
         pokemonModel.toMap(),
       );
 
-      return pokemonModel.copyWith(id: id);
+      return pokemonModel;
     } catch (_) {
       throw CouldNotAddFavPokemon();
     }
