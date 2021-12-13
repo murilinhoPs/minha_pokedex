@@ -122,6 +122,7 @@ class _PokedexPokemonDetailsPageState extends State<PokedexPokemonDetailsPage> {
             style: TextStyle(
               letterSpacing: 2.4,
               fontWeight: FontWeight.bold,
+              fontSize: 20,
             ),
           ),
         ),
@@ -131,39 +132,137 @@ class _PokedexPokemonDetailsPageState extends State<PokedexPokemonDetailsPage> {
   }
 
   Widget _buildPokemonDetails(PokemonDetails pokemon) {
+    final types = pokemon.types.map((type) {
+      final color = elementTypesColors[type];
+
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+        child: PokemonTypeWidget(
+          name: type.toCapitalized(),
+          color: color!,
+        ),
+      );
+    }).toList();
+
+    final stats = pokemon.stats.map((stat) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(stat.name),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                '${stat.baseStat}',
+                style: TextStyle(
+                  color: Colors.grey[400],
+                ),
+              ),
+              SizedBox(width: 16.0),
+              Container(
+                width: 154,
+                height: 12,
+                child: LinearProgressIndicator(
+                  color: elementTypesColors[pokemon.types[0]],
+                  backgroundColor: Colors.black,
+                  value: 0.5,
+
+                  // valueColor: AlwaysStoppedAnimation<Color>(Colors.transparent),
+                ),
+              )
+            ],
+          )
+        ],
+      );
+    }).toList();
+
     return Center(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Transform.scale(
-            scale: 2.0,
-            origin: Offset(-4, 0),
-            child: Image.network(
-              pokemon.imageUrl,
-              // scale: 1.8,
+          Container(
+            height: 200,
+            padding: const EdgeInsets.only(
+              top: 12.0,
+              bottom: 12.0,
             ),
-          ),
-          Text(
-            '${pokemon.name}',
-          ),
-          PokemonTypeWidget(
-            name: pokemon.types[0].toCapitalized(),
-            color: elementTypesColors[pokemon.types[0]]!,
+            child: Transform.scale(
+              scale: 2.0,
+              origin: Offset(-4, 0),
+              child: Image.network(
+                pokemon.imageUrl,
+              ),
+            ),
           ),
           Expanded(
             child: Material(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(
-                  54.0,
+                  32.0,
                 ),
                 topRight: Radius.circular(
-                  54.0,
+                  32.0,
                 ),
               ),
               color: Colors.grey[800],
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [Container()],
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: 8.0,
+                  left: 20.0,
+                  right: 20.0,
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                      pokemon.name.toCapitalized(),
+                      style: TextStyle(
+                        fontSize: 32.0,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                    SizedBox(height: 12.2),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ...types,
+                      ],
+                    ),
+                    SizedBox(height: 16.0),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              'Height: ',
+                              style: TextStyle(
+                                color: Colors.grey[400],
+                              ),
+                            ),
+                            Text('${pokemon.height / 10} M'),
+                          ],
+                        ),
+                        SizedBox(height: 12.0),
+                        Row(
+                          children: [
+                            Text(
+                              'Weight: ',
+                              style: TextStyle(
+                                color: Colors.grey[400],
+                              ),
+                            ),
+                            Text('${pokemon.weight / 10} KG'),
+                          ],
+                        ),
+                        SizedBox(height: 12.0),
+                        Column(
+                          children: [...stats],
+                        )
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
