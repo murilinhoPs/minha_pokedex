@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:minha_pokedex/src/application/widgets/pokemon_type_widget.dart';
 import 'package:minha_pokedex/src/domain/entities/pokemon.dart';
 import 'package:minha_pokedex/src/utils/element_types.dart';
+import 'package:minha_pokedex/src/utils/formatters.dart';
 import 'package:minha_pokedex/src/utils/string_extension.dart';
 
 class PokemonCardContent extends StatelessWidget {
@@ -11,18 +12,6 @@ class PokemonCardContent extends StatelessWidget {
     Key? key,
     required this.pokemon,
   }) : super(key: key);
-
-  String _getFullPokemonId(int num) {
-    final numLenght = num.toString().length;
-
-    if (numLenght == 1) {
-      return '#00$num';
-    }
-    if (numLenght == 2) {
-      return '#0$num';
-    }
-    return '#$num';
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,9 +55,9 @@ class PokemonCardContent extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              _getFullPokemonId(pokemon.pokedexNumber),
+              getFullPokemonId(pokemon.pokedexNumber),
               style: TextStyle(
-                letterSpacing: 1,
+                letterSpacing: 2.0,
                 color: Colors.red[600],
                 fontWeight: FontWeight.bold,
               ),
