@@ -33,13 +33,14 @@ class _PokedexHomePageState extends State<PokedexHomePage> {
         child: Stack(
           children: [
             Positioned(
-              top: -184,
+              top: -182,
               left: 0,
               right: 0,
               child: Container(
+                alignment: Alignment.topCenter,
                 child: Image.asset(
                   Assets.pokeball3x,
-                  scale: 0.6,
+                  scale: 0.62,
                   color: Colors.grey.withOpacity(0.2),
                 ),
               ),

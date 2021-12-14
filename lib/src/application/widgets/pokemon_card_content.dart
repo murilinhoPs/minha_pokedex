@@ -58,7 +58,7 @@ class PokemonCardContent extends StatelessWidget {
               getFullPokemonId(pokemon.pokedexNumber),
               style: TextStyle(
                 letterSpacing: 2.0,
-                color: Colors.red[600],
+                color: Colors.red[400],
                 fontWeight: FontWeight.bold,
               ),
             ),
