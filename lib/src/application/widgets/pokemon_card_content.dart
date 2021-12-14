@@ -29,11 +29,11 @@ class PokemonCardContent extends StatelessWidget {
 
   Widget _buildPokemonImage() {
     return Transform.scale(
-      scale: 1.6,
+      scale: 1.54,
       origin: Offset(-8, 0),
       child: Image.network(
         pokemon.imageUrl,
-        scale: 1.8,
+        scale: 2.0,
       ),
     );
   }
@@ -51,28 +51,29 @@ class PokemonCardContent extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              getFullPokemonId(pokemon.pokedexNumber),
-              style: TextStyle(
-                letterSpacing: 2.0,
-                color: Colors.red[400],
-                fontWeight: FontWeight.bold,
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                getFullPokemonId(pokemon.pokedexNumber),
+                style: TextStyle(
+                  letterSpacing: 2.0,
+                  color: Colors.red[400],
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            Text(
-              pokemon.name.toCapitalized(),
-              style: TextStyle(
-                // color: Colors.black,
-                fontWeight: FontWeight.bold,
-                height: 1.0,
-                fontSize: 24,
+              Text(
+                pokemon.name.toCapitalized(),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  height: 1.0,
+                  fontSize: 20.4,
+                ),
               ),
-            ),
-            SizedBox(height: 8.0)
-          ],
+              SizedBox(height: 8.0)
+            ],
+          ),
         ),
         Wrap(
           direction: Axis.vertical,
