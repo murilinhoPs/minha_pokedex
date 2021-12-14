@@ -10,12 +10,8 @@ import 'package:minha_pokedex/src/application/pages/pokedex_pokemon_details/widg
 import 'package:minha_pokedex/src/application/pages/pokedex_pokemon_details/widgets/pokemon_name_title.dart';
 import 'package:minha_pokedex/src/application/pages/pokedex_pokemon_details/widgets/pokemon_types_title.dart';
 import 'package:minha_pokedex/src/application/widgets/loading_indicator.dart';
-import 'package:minha_pokedex/src/application/widgets/pokemon_type_widget.dart';
 import 'package:minha_pokedex/src/application/widgets/reload_content_button.dart';
 import 'package:minha_pokedex/src/domain/entities/pokemon_details.dart';
-import 'package:minha_pokedex/src/utils/element_types.dart';
-import 'package:minha_pokedex/src/utils/formatters.dart';
-import 'package:minha_pokedex/src/utils/string_extension.dart';
 import 'package:minha_pokedex/src/utils/strings.dart';
 
 class PokedexPokemonDetailsPage extends StatefulWidget {
