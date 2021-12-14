@@ -9,4 +9,6 @@ class Strings {
   static const String favoritesTitle = 'Favoritos';
   static const String favoritesDoesNotExist = 'não existem favoritos ainda.';
   static const String reloadFavPokemons = 'Carregar novamente os favoritos';
+  static const String weight = 'Peso';
+  static const String height = 'Altura';
 }
