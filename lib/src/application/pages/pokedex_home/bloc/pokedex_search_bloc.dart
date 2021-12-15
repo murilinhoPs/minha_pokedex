@@ -14,19 +14,24 @@ class PokedexSearchBloc extends Bloc<PokedexSearchEvent, PokedexSearchState> {
   PokedexSearchBloc({
     required this.getPokemons,
   }) : super(PokedexSearchInitial()) {
-    on<PokedexSearchStarted>(
-      _onGetPokemonsCalled,
-    );
+    on<PokedexSearchOpened>(_onGetPokemonsCalled);
+    on<PokedexSearchNextPageFetched>(_onNextPokemonPageFetched);
   }
 
+  bool _isFetching = false;
+  List<Pokemon> _pokemonList = [];
+
   Future<void> _onGetPokemonsCalled(
-    PokedexSearchStarted event,
+    PokedexSearchOpened event,
     Emitter<PokedexSearchState> emit,
   ) async {
     emit(PokedexSearchLoadInProgress());
 
     try {
-      final pokemons = await getPokemons();
+      final pokemons = await getPokemons(
+        pageOffset: 0,
+      );
+      _pokemonList = pokemons;
 
       return emit(
         PokedexSearchLoadSuccess(
@@ -34,6 +39,36 @@ class PokedexSearchBloc extends Bloc<PokedexSearchEvent, PokedexSearchState> {
           currentPageOffest: 0,
         ),
       );
+    } catch (_) {
+      emit(PokedexSearchLoadFailure());
+    }
+  }
+
+  Future<void> _onNextPokemonPageFetched(
+    PokedexSearchNextPageFetched event,
+    Emitter<PokedexSearchState> emit,
+  ) async {
+    emit(PokedexSearchNextPageInProgress());
+
+    final offset = event.pageOffset + 24;
+
+    try {
+      if (!_isFetching) {
+        _isFetching = true;
+
+        final pokemons = await getPokemons(
+          pageOffset: offset,
+        );
+        _pokemonList..addAll(pokemons);
+
+        emit(
+          PokedexSearchLoadSuccess(
+            pokemonsFromPokedex: _pokemonList,
+            currentPageOffest: offset,
+          ),
+        );
+        _isFetching = false;
+      }
     } catch (_) {
       emit(PokedexSearchLoadFailure());
     }

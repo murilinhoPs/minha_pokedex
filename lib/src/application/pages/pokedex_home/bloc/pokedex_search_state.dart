@@ -10,6 +10,8 @@ class PokedexSearchInitial extends PokedexSearchState {}
 
 class PokedexSearchLoadInProgress extends PokedexSearchState {}
 
+class PokedexSearchNextPageInProgress extends PokedexSearchState {}
+
 class PokedexSearchLoadSuccess extends PokedexSearchState {
   final List<Pokemon> pokemonsFromPokedex;
   final int currentPageOffest;

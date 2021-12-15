@@ -6,6 +6,17 @@ abstract class PokedexSearchEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class PokedexSearchStarted extends PokedexSearchEvent {}
+class PokedexSearchOpened extends PokedexSearchEvent {}
 
-class PokedexSearchNextPageStarted extends PokedexSearchEvent {}
+class PokedexSearchNextPageFetched extends PokedexSearchEvent {
+  final int pageOffset;
+
+  PokedexSearchNextPageFetched({
+    required this.pageOffset,
+  });
+
+  @override
+  List<Object?> get props => [
+        pageOffset,
+      ];
+}
