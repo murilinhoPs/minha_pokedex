@@ -18,13 +18,13 @@ class PokemonCircularStat extends StatelessWidget {
       alignment: Alignment.center,
       children: [
         Container(
-          width: 80.0,
-          height: 80.0,
+          width: 68.0,
+          height: 68.0,
           child: CircularProgressIndicator(
             color: pokemonStatColor,
-            backgroundColor: Colors.grey[700],
+            backgroundColor: Colors.grey[900]!.withOpacity(0.54),
             value: baseStat.toDouble() / 100,
-            strokeWidth: 8.0,
+            strokeWidth: 6.4,
           ),
         ),
         Align(

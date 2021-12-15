@@ -158,15 +158,13 @@ class PokemonDetailsCard extends StatelessWidget {
             ],
           ),
           SizedBox(height: 24.0),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                PokemonBasicInfos(pokemon: pokemon),
-                SizedBox(height: 24.0),
-                PokemonGridStatus(pokemon: pokemon)
-              ],
-            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              PokemonBasicInfos(pokemon: pokemon),
+              SizedBox(height: 24.0),
+              PokemonGridStatus(pokemon: pokemon)
+            ],
           ),
         ],
       ),

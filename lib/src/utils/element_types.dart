@@ -17,6 +17,6 @@ const elementTypesColors = {
   'ghost': Color(0xff714AAF),
   'dragon': Color(0xff0F6AC0),
   'fairy': Color(0xffED6EC7),
-  'dark': Color(0xff58575F),
+  'dark': Color(0xFF65607E),
   'steel': Color(0xFF72A4BD),
 };

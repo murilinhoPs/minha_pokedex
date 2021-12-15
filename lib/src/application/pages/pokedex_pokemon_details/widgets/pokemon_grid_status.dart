@@ -29,7 +29,10 @@ class PokemonGridStatus extends StatelessWidget {
     return GridView.count(
       shrinkWrap: true,
       crossAxisSpacing: 8.0,
-      mainAxisSpacing: 20.0,
+      mainAxisSpacing: 12.0,
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16.0,
+      ),
       physics: NeverScrollableScrollPhysics(),
       crossAxisCount: 3,
       children: stats,
