@@ -11,8 +11,14 @@ class PokeApiRepositroyImpl implements PokeApiRepository {
   });
 
   @override
-  Future<List<Pokemon>> getAllPokemons() async {
-    return await pokeApiProvider.getAllPokemonsFullList();
+  Future<List<Pokemon>> getAllPokemons({
+    required int pageOffset,
+    int pageLimit = 24,
+  }) async {
+    return await pokeApiProvider.getAllPokemonsFullList(
+      pageOffset: pageOffset,
+      pageLimit: pageLimit,
+    );
   }
 
   @override

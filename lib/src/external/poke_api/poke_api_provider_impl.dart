@@ -11,16 +11,19 @@ import 'package:minha_pokedex/src/infra/mappers/map_pokemon_details_api_to_entit
 class PokeApiProviderImpl implements PokeApiProvider {
   final GlobalHttpClient client;
 
-  PokeApiProviderImpl({
+  const PokeApiProviderImpl({
     required this.client,
   });
 
   @override
-  Future<PokemonListResponse> getPokemonsSimpleList() async {
+  Future<PokemonListResponse> getPokemonsSimpleList({
+    required int pageOffset,
+    required int pageLimit,
+  }) async {
     try {
       final pokemonListData = await client.http.get(
-        'pokemon/?offset=0&limit=60',
-      ); //TODO:Trocar o offset e o limit depois e colocar paginação (offset)
+        'pokemon/?offset=$pageOffset&limit=$pageLimit',
+      );
 
       if (pokemonListData.data == null) throw CouldNotGetPokemonsList();
 
@@ -31,9 +34,15 @@ class PokeApiProviderImpl implements PokeApiProvider {
   }
 
   @override
-  Future<List<Pokemon>> getAllPokemonsFullList() async {
+  Future<List<Pokemon>> getAllPokemonsFullList({
+    required int pageOffset,
+    required int pageLimit,
+  }) async {
     try {
-      final pokemonFromApi = await getPokemonsSimpleList();
+      final pokemonFromApi = await getPokemonsSimpleList(
+        pageOffset: pageOffset,
+        pageLimit: pageLimit,
+      );
 
       var apiList = <PokemonDetailsApi>[];
       var pokemonList = <Pokemon>[];
@@ -42,17 +51,14 @@ class PokeApiProviderImpl implements PokeApiProvider {
         final pokemonDetailsResponse = await client.http.get(
           '${pokemonFromList!.url}/',
         );
-
         final pokemonDetails = PokemonDetailsApi.fromJson(
           pokemonDetailsResponse.data,
         );
-
         apiList.add(pokemonDetails);
       }
 
       for (var pokemonDetails in apiList) {
         final pokemon = pokemonDetails.mapPokemonDetailApiToPokemonEntity();
-
         pokemonList.add(pokemon);
       }
 
@@ -66,7 +72,6 @@ class PokeApiProviderImpl implements PokeApiProvider {
   Future<PokemonDetails> getPokemonDetails(int pokemonId) async {
     try {
       final pokemonDetailsData = await client.http.get('pokemon/$pokemonId');
-
       final pokemonDetails = PokemonDetailsApi.fromJson(
         pokemonDetailsData.data,
       );

@@ -9,9 +9,13 @@ class GetPokemonsUseCase {
     required this.pokeApiRepository,
   });
 
-  Future<List<Pokemon>> call() async {
+  Future<List<Pokemon>> call({
+    required int pageOffset,
+  }) async {
     try {
-      return await pokeApiRepository.getAllPokemons();
+      return await pokeApiRepository.getAllPokemons(
+        pageOffset: pageOffset,
+      );
     } on CouldNotGetFavPokemons {
       rethrow;
     } catch (e) {
