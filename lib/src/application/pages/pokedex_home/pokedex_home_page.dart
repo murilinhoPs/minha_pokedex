@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -7,6 +9,7 @@ import 'package:minha_pokedex/src/application/pages/pokedex_home/widgets/pokedex
 import 'package:minha_pokedex/src/application/widgets/loading_indicator.dart';
 import 'package:minha_pokedex/src/application/widgets/pokemon_list.dart';
 import 'package:minha_pokedex/src/application/widgets/reload_content_button.dart';
+import 'package:minha_pokedex/src/domain/entities/pokemon.dart';
 import 'package:minha_pokedex/src/utils/assets.dart';
 import 'package:minha_pokedex/src/utils/strings.dart';
 
@@ -17,13 +20,38 @@ class PokedexHomePage extends StatefulWidget {
 
 class _PokedexHomePageState extends State<PokedexHomePage> {
   final pokedexSearchBloc = GetIt.I.get<PokedexSearchBloc>();
+  final scrollController = ScrollController();
+
+  int pageOffset = 0;
+  bool isLoading = false;
+  List<Pokemon> pokemonsList = [];
 
   @override
   void initState() {
     pokedexSearchBloc.add(
-      PokedexSearchStarted(),
+      PokedexSearchOpened(),
     );
+    scrollController.addListener(_nextPageListener);
+
     super.initState();
+  }
+
+  void _nextPageListener() {
+    if (scrollController.offset == scrollController.position.maxScrollExtent) {
+      Timer(Duration(milliseconds: 20), () {
+        scrollController.animateTo(
+          scrollController.position.maxScrollExtent,
+          duration: Duration(milliseconds: 240),
+          curve: Curves.decelerate,
+        );
+      });
+
+      pokedexSearchBloc.add(
+        PokedexSearchNextPageFetched(
+          pageOffset: pageOffset,
+        ),
+      );
+    }
   }
 
   @override
@@ -74,27 +102,38 @@ class _PokedexHomePageState extends State<PokedexHomePage> {
   }
 
   Widget _buildPokemonCards() {
-    return BlocBuilder<PokedexSearchBloc, PokedexSearchState>(
-      bloc: pokedexSearchBloc,
-      builder: (context, state) {
+    return BlocConsumer<PokedexSearchBloc, PokedexSearchState>(
+      listener: (context, state) {
         if (state is PokedexSearchLoadSuccess) {
-          final pokemonsList = state.pokemonsFromPokedex;
-
-          return PokemonList(
-            pokemons: pokemonsList,
-          );
+          isLoading = false;
+          pageOffset = state.currentPageOffest;
+          pokemonsList = state.pokemonsFromPokedex;
         }
 
+        if (state is PokedexSearchNextPageInProgress) {
+          isLoading = true;
+        }
+      },
+      bloc: pokedexSearchBloc,
+      builder: (context, state) {
         if (state is PokedexSearchLoadFailure) {
           return ReloadContentButton(
             onReload: () => pokedexSearchBloc.add(
-              PokedexSearchStarted(),
+              PokedexSearchOpened(),
             ),
             reloadText: Strings.reloadPokedex,
           );
         }
 
-        return LoadingIndicator();
+        if (state is PokedexSearchLoadInProgress) {
+          return LoadingIndicator();
+        }
+
+        return PokemonList(
+          pokemons: pokemonsList,
+          controller: scrollController,
+          isLoadingPokemons: isLoading,
+        );
       },
     );
   }
