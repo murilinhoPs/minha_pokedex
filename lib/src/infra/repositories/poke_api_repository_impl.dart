@@ -13,7 +13,7 @@ class PokeApiRepositroyImpl implements PokeApiRepository {
   @override
   Future<List<Pokemon>> getAllPokemons({
     required int pageOffset,
-    int pageLimit = 24,
+    int pageLimit = 30,
   }) async {
     return await pokeApiProvider.getAllPokemonsFullList(
       pageOffset: pageOffset,
