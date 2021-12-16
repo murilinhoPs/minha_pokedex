@@ -11,6 +11,10 @@ class CouldNotGetAllPokemons extends PokemonApiExceptions {
   CouldNotGetAllPokemons() : super('Could not find all pokemons from api');
 }
 
-class CouldNotGetPokemon extends PokemonApiExceptions {
-  CouldNotGetPokemon() : super('Could not find that specific pokemon');
+class CouldNotGetPokemonDetails extends PokemonApiExceptions {
+  CouldNotGetPokemonDetails() : super('Could not find that pokemon details');
+}
+
+class CouldNotSearchPokemon extends PokemonApiExceptions {
+  CouldNotSearchPokemon() : super('Could not find that specific pokemon');
 }

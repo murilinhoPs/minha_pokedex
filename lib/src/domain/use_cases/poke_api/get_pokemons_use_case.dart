@@ -1,5 +1,5 @@
 import 'package:minha_pokedex/src/domain/entities/pokemon.dart';
-import 'package:minha_pokedex/src/domain/exceptions/pokemon_storage_exceptions.dart';
+import 'package:minha_pokedex/src/domain/exceptions/pokemon_api_exceptions.dart';
 import 'package:minha_pokedex/src/domain/repositories/poke_api_repository.dart';
 
 class GetPokemonsUseCase {
@@ -16,7 +16,7 @@ class GetPokemonsUseCase {
       return await pokeApiRepository.getAllPokemons(
         pageOffset: pageOffset,
       );
-    } on CouldNotGetFavPokemons {
+    } on CouldNotGetAllPokemons {
       rethrow;
     } catch (e) {
       throw Exception('Unexpected error: ${e.toString()}');

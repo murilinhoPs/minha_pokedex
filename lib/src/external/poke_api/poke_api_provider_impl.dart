@@ -78,7 +78,7 @@ class PokeApiProviderImpl implements PokeApiProvider {
 
       return pokemonDetails.mapPokemonDetailApiToPokemonDetails();
     } on DioError catch (_) {
-      throw CouldNotGetPokemon();
+      throw CouldNotGetPokemonDetails();
     }
   }
 }
