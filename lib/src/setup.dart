@@ -12,6 +12,7 @@ import 'package:minha_pokedex/src/domain/use_cases/fav_pokemons/get_fav_pokemon_
 import 'package:minha_pokedex/src/domain/use_cases/fav_pokemons/get_fav_pokemons_use_case.dart';
 import 'package:minha_pokedex/src/domain/use_cases/poke_api/get_pokemon_details_use_case.dart';
 import 'package:minha_pokedex/src/domain/use_cases/poke_api/get_pokemons_use_case.dart';
+import 'package:minha_pokedex/src/domain/use_cases/poke_api/search_pokemons_use_case.dart';
 import 'package:minha_pokedex/src/external/global_http_client.dart';
 import 'package:minha_pokedex/src/external/local_storage/local_storage_provider_impl.dart';
 import 'package:minha_pokedex/src/external/local_storage/pokemons/fav_pokemons_db_service.dart';
@@ -102,12 +103,17 @@ void _setupDomain() {
       pokeApiRepository: GetIt.I.get<PokeApiRepository>(),
     ),
   );
+
+  GetIt.I.registerLazySingleton<SearchPokemonsUseCase>(
+    () => SearchPokemonsUseCase(),
+  );
 }
 
 void _setupControllers() {
   GetIt.I.registerLazySingleton<PokedexSearchBloc>(
     () => PokedexSearchBloc(
       getPokemons: GetIt.I.get<GetPokemonsUseCase>(),
+      searchPokemons: GetIt.I.get<SearchPokemonsUseCase>(),
     ),
   );
 

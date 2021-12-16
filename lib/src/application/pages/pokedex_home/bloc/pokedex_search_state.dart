@@ -1,31 +1,50 @@
 part of 'pokedex_search_bloc.dart';
 
-@immutable
-abstract class PokedexSearchState extends Equatable {
-  @override
-  List<Object?> get props => [];
+enum SearchStatus {
+  initial,
+  firstPageLoading,
+  nextPageLoading,
+  success,
+  failure,
 }
 
-class PokedexSearchInitial extends PokedexSearchState {}
-
-class PokedexSearchLoadInProgress extends PokedexSearchState {}
-
-class PokedexSearchNextPageInProgress extends PokedexSearchState {}
-
-class PokedexSearchLoadSuccess extends PokedexSearchState {
-  final List<Pokemon> pokemonsFromPokedex;
-  final int currentPageOffest;
-
-  PokedexSearchLoadSuccess({
-    required this.pokemonsFromPokedex,
-    required this.currentPageOffest,
+class PokedexSearchState extends Equatable {
+  const PokedexSearchState({
+    this.status = SearchStatus.initial,
+    this.currentPageOffset = 0,
+    this.pokemons = const <Pokemon>[],
+    this.searchPokemons = const <Pokemon>[],
   });
 
-  @override
-  List<Object?> get props => [
-        pokemonsFromPokedex,
-        currentPageOffest,
-      ];
-}
+  final SearchStatus status;
+  final List<Pokemon> pokemons;
+  final List<Pokemon> searchPokemons;
+  final int currentPageOffset;
 
-class PokedexSearchLoadFailure extends PokedexSearchState {}
+  PokedexSearchState copyWith({
+    SearchStatus? status,
+    List<Pokemon>? pokemons,
+    List<Pokemon>? searchPokemons,
+    int? currentPageOffset,
+  }) {
+    return PokedexSearchState(
+      status: status ?? this.status,
+      pokemons: pokemons ?? this.pokemons,
+      searchPokemons: searchPokemons ?? this.searchPokemons,
+      currentPageOffset: currentPageOffset ?? this.currentPageOffset,
+    );
+  }
+
+  @override
+  List<Object> get props => [
+        status,
+        pokemons,
+        searchPokemons,
+        currentPageOffset,
+      ];
+
+  @override
+  String toString() {
+    return 'PokedexSearchState(status: $status, pokemons: $pokemons, searchPokemons: $searchPokemons, currentPageOffset: $currentPageOffset)';
+  }
+}

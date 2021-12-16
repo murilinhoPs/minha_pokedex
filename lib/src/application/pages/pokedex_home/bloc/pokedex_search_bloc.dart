@@ -5,42 +5,53 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:minha_pokedex/src/domain/entities/pokemon.dart';
 import 'package:minha_pokedex/src/domain/use_cases/poke_api/get_pokemons_use_case.dart';
+import 'package:minha_pokedex/src/domain/use_cases/poke_api/search_pokemons_use_case.dart';
 
 part 'pokedex_search_event.dart';
 part 'pokedex_search_state.dart';
 
 class PokedexSearchBloc extends Bloc<PokedexSearchEvent, PokedexSearchState> {
   final GetPokemonsUseCase getPokemons;
+  final SearchPokemonsUseCase searchPokemons;
+
   PokedexSearchBloc({
     required this.getPokemons,
-  }) : super(PokedexSearchInitial()) {
-    on<PokedexSearchOpened>(_onGetPokemonsCalled);
+    required this.searchPokemons,
+  }) : super(PokedexSearchState()) {
+    on<PokedexSearchPageOpened>(_onGetPokemonsCalled);
     on<PokedexSearchNextPageFetched>(_onNextPokemonPageFetched);
+    on<PokedexSearchPokemonFetched>(_onSearchPokemon);
   }
 
   bool _isFetching = false;
-  List<Pokemon> _pokemonList = [];
 
   Future<void> _onGetPokemonsCalled(
-    PokedexSearchOpened event,
+    PokedexSearchPageOpened event,
     Emitter<PokedexSearchState> emit,
   ) async {
-    emit(PokedexSearchLoadInProgress());
+    emit(
+      state.copyWith(
+        status: SearchStatus.firstPageLoading,
+      ),
+    );
 
     try {
       final pokemons = await getPokemons(
         pageOffset: 0,
       );
-      _pokemonList = pokemons;
 
       return emit(
-        PokedexSearchLoadSuccess(
-          pokemonsFromPokedex: pokemons,
-          currentPageOffest: 0,
+        state.copyWith(
+          status: SearchStatus.success,
+          pokemons: pokemons,
         ),
       );
     } catch (_) {
-      emit(PokedexSearchLoadFailure());
+      emit(
+        state.copyWith(
+          status: SearchStatus.failure,
+        ),
+      );
     }
   }
 
@@ -48,29 +59,65 @@ class PokedexSearchBloc extends Bloc<PokedexSearchEvent, PokedexSearchState> {
     PokedexSearchNextPageFetched event,
     Emitter<PokedexSearchState> emit,
   ) async {
-    emit(PokedexSearchNextPageInProgress());
+    emit(
+      state.copyWith(
+        status: SearchStatus.nextPageLoading,
+      ),
+    );
 
-    final offset = event.pageOffset + 24;
+    final pageOffset = event.pageOffset + 30;
 
     try {
       if (!_isFetching) {
         _isFetching = true;
 
         final pokemons = await getPokemons(
-          pageOffset: offset,
+          pageOffset: pageOffset,
         );
-        _pokemonList..addAll(pokemons);
+
+        final pokemonList = state.pokemons + pokemons;
 
         emit(
-          PokedexSearchLoadSuccess(
-            pokemonsFromPokedex: _pokemonList,
-            currentPageOffest: offset,
+          state.copyWith(
+            status: SearchStatus.success,
+            pokemons: pokemonList,
+            currentPageOffset: pageOffset,
           ),
         );
         _isFetching = false;
       }
     } catch (_) {
-      emit(PokedexSearchLoadFailure());
+      emit(
+        state.copyWith(
+          status: SearchStatus.failure,
+        ),
+      );
+    }
+  }
+
+  Future<void> _onSearchPokemon(
+    PokedexSearchPokemonFetched event,
+    Emitter<PokedexSearchState> emit,
+  ) async {
+    try {
+      // Local search
+      final pokemons = await searchPokemons(
+        pokemons: state.pokemons,
+        searchTerm: event.searchTerm,
+      );
+
+      return emit(
+        state.copyWith(
+          status: SearchStatus.success,
+          searchPokemons: pokemons,
+        ),
+      );
+    } catch (_) {
+      emit(
+        state.copyWith(
+          status: SearchStatus.failure,
+        ),
+      );
     }
   }
 }

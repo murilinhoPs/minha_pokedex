@@ -22,17 +22,12 @@ class _PokedexHomePageState extends State<PokedexHomePage> {
   final pokedexSearchBloc = GetIt.I.get<PokedexSearchBloc>();
   final scrollController = ScrollController();
 
-  int pageOffset = 0;
-  bool isLoading = false;
-  List<Pokemon> pokemonsList = [];
-
   @override
   void initState() {
     pokedexSearchBloc.add(
-      PokedexSearchOpened(),
+      PokedexSearchPageOpened(),
     );
     scrollController.addListener(_nextPageListener);
-
     super.initState();
   }
 
@@ -48,10 +43,16 @@ class _PokedexHomePageState extends State<PokedexHomePage> {
 
       pokedexSearchBloc.add(
         PokedexSearchNextPageFetched(
-          pageOffset: pageOffset,
+          pageOffset: pokedexSearchBloc.state.currentPageOffset,
         ),
       );
     }
+  }
+
+  void _onSearchPokemon(String text) {
+    pokedexSearchBloc.add(
+      PokedexSearchPokemonFetched(searchTerm: text),
+    );
   }
 
   @override
@@ -82,7 +83,9 @@ class _PokedexHomePageState extends State<PokedexHomePage> {
               ),
               child: Column(
                 children: [
-                  PokedexHeader(),
+                  PokedexHeader(
+                    onChanged: _onSearchPokemon,
+                  ),
                   SizedBox(height: 16.0),
                   Expanded(
                     child: _buildPokemonCards(),
@@ -102,37 +105,31 @@ class _PokedexHomePageState extends State<PokedexHomePage> {
   }
 
   Widget _buildPokemonCards() {
-    return BlocConsumer<PokedexSearchBloc, PokedexSearchState>(
-      listener: (context, state) {
-        if (state is PokedexSearchLoadSuccess) {
-          isLoading = false;
-          pageOffset = state.currentPageOffest;
-          pokemonsList = state.pokemonsFromPokedex;
-        }
-
-        if (state is PokedexSearchNextPageInProgress) {
-          isLoading = true;
-        }
-      },
+    return BlocBuilder<PokedexSearchBloc, PokedexSearchState>(
       bloc: pokedexSearchBloc,
       builder: (context, state) {
-        if (state is PokedexSearchLoadFailure) {
+        final status = state.status;
+        final pokemonList = state.searchPokemons.isEmpty
+            ? state.pokemons
+            : state.searchPokemons;
+
+        if (status == SearchStatus.failure) {
           return ReloadContentButton(
             onReload: () => pokedexSearchBloc.add(
-              PokedexSearchOpened(),
+              PokedexSearchPageOpened(),
             ),
             reloadText: Strings.reloadPokedex,
           );
         }
 
-        if (state is PokedexSearchLoadInProgress) {
+        if (status == SearchStatus.firstPageLoading) {
           return LoadingIndicator();
         }
 
         return PokemonList(
-          pokemons: pokemonsList,
+          pokemons: pokemonList,
           controller: scrollController,
-          isLoadingPokemons: isLoading,
+          isLoadingPokemons: status == SearchStatus.nextPageLoading,
         );
       },
     );
