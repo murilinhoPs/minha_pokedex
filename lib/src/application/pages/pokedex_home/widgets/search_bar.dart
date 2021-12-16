@@ -1,49 +1,68 @@
 import 'package:flutter/material.dart';
 
 class SearchBar extends StatelessWidget {
+  SearchBar({
+    Key? key,
+    required this.onChanged,
+    this.searchText = '',
+  }) : super(key: key);
+
+  final Function(String) onChanged;
+  final String searchText;
+
+  final controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.0),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(16.0),
+      child: Container(
+        foregroundDecoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16.0),
+          border: Border.all(
+            color: Colors.white,
+            width: 1.6,
+          ),
+        ),
         color: Colors.grey[800],
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            padding: EdgeInsets.all(8.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(
-                8.0,
-              ),
-              color: Colors.white,
-            ),
-            child: Icon(
-              Icons.search,
-              color: Colors.red,
-              size: 20.0,
-            ),
-          ),
-          SizedBox(width: 12),
-          Expanded(
-            child: TextFormField(
-              decoration: InputDecoration(
-                enabled: false,
-                isDense: true,
-                hintText: 'Deactivated...',
-                contentPadding: EdgeInsets.zero,
-                hintStyle: TextStyle(
-                  fontSize: 14,
-                  // color: Colors.white,
-                  height: 1,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(width: 12),
+            Expanded(
+              child: TextField(
+                controller: controller,
+                onChanged: onChanged,
+                decoration: InputDecoration(
+                  enabled: true,
+                  isDense: true,
+                  hintText: 'Procure pelo o nome do pokémon',
+                  contentPadding: EdgeInsets.zero,
+                  hintStyle: TextStyle(
+                    fontSize: 14,
+                    // color: Colors.white,
+                  ),
+                  border: InputBorder.none,
                 ),
-                border: InputBorder.none,
               ),
             ),
-          ),
-        ],
+            Container(
+              padding: EdgeInsets.all(8.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(
+                  color: Colors.white,
+                  width: 1.6,
+                ),
+              ),
+              child: Icon(
+                Icons.search,
+                color: Colors.red,
+                size: 20.0,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
