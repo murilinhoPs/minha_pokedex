@@ -5,17 +5,18 @@ import 'package:minha_pokedex/src/utils/assets.dart';
 class BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
+    return Material(
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(
-          54.0,
+          40.0,
         ),
         topRight: Radius.circular(
-          54.0,
+          40.0,
         ),
       ),
-      child: BottomAppBar(
-        color: Colors.red[600],
+      color: Colors.red[600],
+      child: SafeArea(
+        top: false,
         child: Padding(
           padding: EdgeInsets.symmetric(
             vertical: 8.0,
