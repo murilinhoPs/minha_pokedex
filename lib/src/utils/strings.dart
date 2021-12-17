@@ -1,7 +1,7 @@
 class Strings {
   static const String pokedex = 'Pokédex';
   static const String searchInPokedex =
-      'Procure os pokemons com o número deles na national Dex ou \npelo seu próprio nome';
+      'Procure os pokemons com o número deles na national Dex ou pelo seu próprio nome';
   static const String loading = 'Carregando...';
   static const String reloadPokedex = 'Carregar novamente a pokédex.';
   static const String reloadPokemonDetails =
@@ -11,4 +11,6 @@ class Strings {
   static const String reloadFavPokemons = 'Carregar novamente os favoritos';
   static const String weight = 'Peso';
   static const String height = 'Altura';
+  static const String searchForPokemon = 'Procure pelo pokémon';
+  static const String loadMore = 'Arraste para cima para carregar mais';
 }
