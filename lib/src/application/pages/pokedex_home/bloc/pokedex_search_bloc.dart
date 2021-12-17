@@ -21,6 +21,7 @@ class PokedexSearchBloc extends Bloc<PokedexSearchEvent, PokedexSearchState> {
     on<PokedexSearchPageOpened>(_onGetPokemonsCalled);
     on<PokedexSearchNextPageFetched>(_onNextPokemonPageFetched);
     on<PokedexSearchPokemonFetched>(_onSearchPokemon);
+    on<PokedexSearchMorePokemonsFetched>(_onSearchMorePokemonsFetched);
   }
 
   bool _isFetching = false;
@@ -65,7 +66,7 @@ class PokedexSearchBloc extends Bloc<PokedexSearchEvent, PokedexSearchState> {
       ),
     );
 
-    final pageOffset = event.pageOffset + 30;
+    final pageOffset = state.currentPageOffset + 30;
 
     try {
       if (!_isFetching) {
@@ -81,6 +82,7 @@ class PokedexSearchBloc extends Bloc<PokedexSearchEvent, PokedexSearchState> {
           state.copyWith(
             status: SearchStatus.success,
             pokemons: pokemonList,
+            searchPokemons: [],
             currentPageOffset: pageOffset,
           ),
         );
@@ -99,19 +101,81 @@ class PokedexSearchBloc extends Bloc<PokedexSearchEvent, PokedexSearchState> {
     PokedexSearchPokemonFetched event,
     Emitter<PokedexSearchState> emit,
   ) async {
+    emit(
+      state.copyWith(
+        status: SearchStatus.filterLoading,
+      ),
+    );
+
     try {
+      if (event.searchTerm.isEmpty) {
+        return emit(
+          state.copyWith(
+            searchPokemons: [],
+            searchedPokemon: event.searchTerm,
+          ),
+        );
+      }
+
       // Local search
       final pokemons = await searchPokemons(
         pokemons: state.pokemons,
         searchTerm: event.searchTerm,
       );
 
-      return emit(
+      emit(
         state.copyWith(
-          status: SearchStatus.success,
+          status: SearchStatus.filterSuccess,
           searchPokemons: pokemons,
+          searchedPokemon: event.searchTerm,
         ),
       );
+    } catch (_) {
+      emit(
+        state.copyWith(
+          status: SearchStatus.failure,
+        ),
+      );
+    }
+  }
+
+  Future<void> _onSearchMorePokemonsFetched(
+    PokedexSearchMorePokemonsFetched event,
+    Emitter<PokedexSearchState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        status: SearchStatus.nextPageLoading,
+      ),
+    );
+
+    final pageOffset = state.currentPageOffset + 30;
+
+    try {
+      if (!_isFetching) {
+        _isFetching = true;
+
+        final pokemons = await getPokemons(
+          pageOffset: pageOffset,
+        );
+
+        final pokemonList = state.pokemons + pokemons;
+
+        final searchedPokemons = await searchPokemons(
+          pokemons: pokemonList,
+          searchTerm: state.searchedPokemon,
+        );
+
+        emit(
+          state.copyWith(
+            status: SearchStatus.filterSuccess,
+            pokemons: pokemonList,
+            searchPokemons: searchedPokemons,
+            currentPageOffset: pageOffset,
+          ),
+        );
+        _isFetching = false;
+      }
     } catch (_) {
       emit(
         state.copyWith(

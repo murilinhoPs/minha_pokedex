@@ -3,23 +3,14 @@ part of 'pokedex_search_bloc.dart';
 @immutable
 abstract class PokedexSearchEvent extends Equatable {
   @override
-  List<Object?> get props => [];
+  List<Object> get props => [];
 }
 
 class PokedexSearchPageOpened extends PokedexSearchEvent {}
 
-class PokedexSearchNextPageFetched extends PokedexSearchEvent {
-  final int pageOffset;
+class PokedexSearchNextPageFetched extends PokedexSearchEvent {}
 
-  PokedexSearchNextPageFetched({
-    required this.pageOffset,
-  });
-
-  @override
-  List<Object?> get props => [
-        pageOffset,
-      ];
-}
+class PokedexSearchMorePokemonsFetched extends PokedexSearchEvent {}
 
 class PokedexSearchPokemonFetched extends PokedexSearchEvent {
   final String searchTerm;
@@ -29,7 +20,7 @@ class PokedexSearchPokemonFetched extends PokedexSearchEvent {
   });
 
   @override
-  List<Object?> get props => [
+  List<Object> get props => [
         searchTerm,
       ];
 }
