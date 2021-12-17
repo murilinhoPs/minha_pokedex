@@ -8,7 +8,7 @@ class LoadingIndicator extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        CircularProgressIndicator(),
+        RefreshProgressIndicator(),
         SizedBox(height: 12.0),
         Text(
           Strings.loading,
