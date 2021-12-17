@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:minha_pokedex/src/application/pages/fav_pokemons/fav_pokemons_page.dart';
 import 'package:minha_pokedex/src/application/pages/pokedex_home/pokedex_home_page.dart';
 import 'package:minha_pokedex/src/application/pages/pokedex_pokemon_details/pokedex_pokemon_details_page.dart';
