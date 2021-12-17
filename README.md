@@ -1,8 +1,22 @@
-# minha_pokedex
+# Pokedex Flutter 
 
-A new Flutter project.
+A pokedex app in [flutter](https://flutter.dev/) with clean architecture and BLOC. It just have simple information about pokemon, and I wanted to create more features in it, like search pokemon according regions, search for items and more info about pokemons.
 
-## Getting Started
+----
+## Preview
+
+https://www.youtube.com/watch?v=KhIUIM5bFjY
+
+----
+
+## Test App
+ - Download project
+ - Install [flutter](https://flutter.dev/docs/get-started/)
+ - Run `flutter pub` get to get the packages
+ - Run `flutter run -d "device name"` and that's it!
+    - You can test on desktop (windows, macOs, Linux) and on mobile (android, ios)
+
+### Getting Started with Flutter
 
 This project is a starting point for a Flutter application.
 
