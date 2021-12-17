@@ -19,19 +19,23 @@ class PokemonTypeWidget extends StatelessWidget {
           ),
         ),
       ),
-      color: color.withOpacity(0.9),
-      child: Container(
-        width: 64,
-        padding: const EdgeInsets.symmetric(
-          // horizontal: 16.0,
-          vertical: 1.4,
+      color: color.withOpacity(0.8),
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          minWidth: 68,
         ),
-        child: Text(
-          name,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            height: 1.4,
-            fontSize: 14,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            // horizontal: 8.0,
+            vertical: 1.6,
+          ),
+          child: Text(
+            name,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              height: 1.4,
+              fontSize: 14,
+            ),
           ),
         ),
       ),
