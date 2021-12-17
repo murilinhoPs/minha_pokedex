@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:minha_pokedex/src/utils/strings.dart';
 
 class SearchBar extends StatelessWidget {
   SearchBar({
@@ -33,14 +34,17 @@ class SearchBar extends StatelessWidget {
               child: TextField(
                 controller: controller,
                 onChanged: onChanged,
+                onTap: () {
+                  controller.clear();
+                  onChanged('');
+                },
                 decoration: InputDecoration(
                   enabled: true,
                   isDense: true,
-                  hintText: 'Procure pelo o nome do pokémon',
+                  hintText: Strings.searchForPokemon,
                   contentPadding: EdgeInsets.zero,
                   hintStyle: TextStyle(
-                    fontSize: 14,
-                    // color: Colors.white,
+                    fontSize: 12,
                   ),
                   border: InputBorder.none,
                 ),

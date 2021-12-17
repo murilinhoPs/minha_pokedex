@@ -4,7 +4,7 @@ import 'package:minha_pokedex/src/utils/assets.dart';
 import 'package:minha_pokedex/src/utils/strings.dart';
 
 class PokedexHeader extends StatelessWidget {
-  PokedexHeader({
+  const PokedexHeader({
     Key? key,
     required this.onChanged,
     this.searchText = '',
