@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:minha_pokedex/src/infra/models/pokemon_model.dart';
 
 void main() {
-  test('Default test', () {
+  test('PokemonModel test', () {
     final model = PokemonModel(
       name: 'pokemon',
       imageUrl: 'nada',
