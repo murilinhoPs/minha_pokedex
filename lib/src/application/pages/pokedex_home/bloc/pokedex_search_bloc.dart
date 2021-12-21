@@ -10,7 +10,8 @@ import 'package:minha_pokedex/src/domain/use_cases/poke_api/search_pokemons_use_
 part 'pokedex_search_event.dart';
 part 'pokedex_search_state.dart';
 
-class PokedexSearchBloc extends Bloc<PokedexSearchEvent, PokedexSearchState> {
+class PokedexSearchBloc
+    extends Bloc<PokedexSearchEvent, PokedexSearchState> {
   final GetPokemonsUseCase getPokemons;
   final SearchPokemonsUseCase searchPokemons;
 
@@ -21,7 +22,8 @@ class PokedexSearchBloc extends Bloc<PokedexSearchEvent, PokedexSearchState> {
     on<PokedexSearchPageOpened>(_onGetPokemonsCalled);
     on<PokedexSearchNextPageFetched>(_onNextPokemonPageFetched);
     on<PokedexSearchPokemonFetched>(_onSearchPokemon);
-    on<PokedexSearchMorePokemonsFetched>(_onSearchMorePokemonsFetched);
+    on<PokedexSearchMorePokemonsFetched>(
+        _onSearchMorePokemonsFetched);
   }
 
   bool _isFetching = false;
@@ -111,6 +113,7 @@ class PokedexSearchBloc extends Bloc<PokedexSearchEvent, PokedexSearchState> {
       if (event.searchTerm.isEmpty) {
         return emit(
           state.copyWith(
+            status: SearchStatus.success,
             searchPokemons: [],
             searchedPokemon: event.searchTerm,
           ),
