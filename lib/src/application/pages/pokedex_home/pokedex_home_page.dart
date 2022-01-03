@@ -65,6 +65,8 @@ class _PokedexHomePageState extends State<PokedexHomePage> {
     );
   }
 
+  void handleScrollNotification(notification) {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -133,11 +135,17 @@ class _PokedexHomePageState extends State<PokedexHomePage> {
           return LoadingIndicator();
         }
 
-        return PokemonList(
-          pokemons: pokemonList,
-          controller: scrollController,
-          isLoadingPokemons: status == SearchStatus.nextPageLoading,
-          canLoadMore: status == SearchStatus.filterSuccess,
+        return NotificationListener<ScrollNotification>(
+          onNotification: (notification) {
+            handleScrollNotification(notification);
+            return false;
+          },
+          child: PokemonList(
+            pokemons: pokemonList,
+            controller: scrollController,
+            isLoadingPokemons: status == SearchStatus.nextPageLoading,
+            canLoadMore: status == SearchStatus.filterSuccess,
+          ),
         );
         Column(
           children: [
