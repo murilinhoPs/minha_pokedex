@@ -24,6 +24,7 @@ dependencies:
   get_it: ^7.2.0
   sqflite_common_ffi:
   equatable:
+  pull_to_refresh_notification: ^2.2.0
 
 dev_dependencies:
   flutter_test:

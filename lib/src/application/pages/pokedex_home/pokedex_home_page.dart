@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -22,9 +21,6 @@ class _PokedexHomePageState extends State<PokedexHomePage> {
   final pokedexSearchBloc = GetIt.I.get<PokedexSearchBloc>();
   final scrollController = ScrollController();
 
-  bool get canLoadMore =>
-      scrollController.offset > scrollController.position.maxScrollExtent + 100;
-
   bool showRefreshIndicator = false;
 
   @override
@@ -32,31 +28,30 @@ class _PokedexHomePageState extends State<PokedexHomePage> {
     pokedexSearchBloc.add(
       PokedexSearchPageOpened(),
     );
-    scrollController.addListener(_nextPageListener);
     super.initState();
   }
 
-  void _nextPageListener() {
-    if (canLoadMore) {
-      Timer(Duration(milliseconds: 30), () {
-        scrollController.animateTo(
-          scrollController.position.maxScrollExtent,
-          duration: Duration(milliseconds: 420),
-          curve: Curves.ease,
-        );
-      });
-
-      if (pokedexSearchBloc.state.status == SearchStatus.filterSuccess) {
-        pokedexSearchBloc.add(
-          PokedexSearchMorePokemonsFetched(),
-        );
-        return;
-      }
-
-      pokedexSearchBloc.add(
-        PokedexSearchNextPageFetched(),
+  bool _nextPageListener() {
+    Timer(Duration(milliseconds: 30), () {
+      scrollController.animateTo(
+        scrollController.position.maxScrollExtent,
+        duration: Duration(milliseconds: 420),
+        curve: Curves.ease,
       );
+    });
+
+    if (pokedexSearchBloc.state.status == SearchStatus.filterSuccess) {
+      pokedexSearchBloc.add(
+        PokedexSearchMorePokemonsFetched(),
+      );
+      return true;
     }
+
+    pokedexSearchBloc.add(
+      PokedexSearchNextPageFetched(),
+    );
+
+    return true;
   }
 
   void _onSearchPokemon(String text) {
@@ -64,8 +59,6 @@ class _PokedexHomePageState extends State<PokedexHomePage> {
       PokedexSearchPokemonFetched(searchTerm: text),
     );
   }
-
-  void handleScrollNotification(notification) {}
 
   @override
   Widget build(BuildContext context) {
@@ -135,17 +128,12 @@ class _PokedexHomePageState extends State<PokedexHomePage> {
           return LoadingIndicator();
         }
 
-        return NotificationListener<ScrollNotification>(
-          onNotification: (notification) {
-            handleScrollNotification(notification);
-            return false;
-          },
-          child: PokemonList(
-            pokemons: pokemonList,
-            controller: scrollController,
-            isLoadingPokemons: status == SearchStatus.nextPageLoading,
-            canLoadMore: status == SearchStatus.filterSuccess,
-          ),
+        return PokemonList(
+          pokemons: pokemonList,
+          refreshPokemons: _nextPageListener,
+          controller: scrollController,
+          isLoadingPokemons: status == SearchStatus.nextPageLoading,
+          canLoadMore: status == SearchStatus.filterSuccess,
         );
         Column(
           children: [
@@ -154,7 +142,7 @@ class _PokedexHomePageState extends State<PokedexHomePage> {
             Expanded(
               child: PokemonList(
                 pokemons: pokemonList,
-                controller: scrollController,
+                refreshPokemons: _nextPageListener,
                 isLoadingPokemons: status == SearchStatus.nextPageLoading,
                 canLoadMore: status == SearchStatus.filterSuccess,
               ),
