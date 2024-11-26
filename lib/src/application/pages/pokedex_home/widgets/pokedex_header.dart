@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide SearchBar;
 import 'package:minha_pokedex/src/application/pages/pokedex_home/widgets/search_bar.dart';
 import 'package:minha_pokedex/src/utils/assets.dart';
 import 'package:minha_pokedex/src/utils/strings.dart';

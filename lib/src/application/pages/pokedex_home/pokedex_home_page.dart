@@ -135,20 +135,20 @@ class _PokedexHomePageState extends State<PokedexHomePage> {
           isLoadingPokemons: status == SearchStatus.nextPageLoading,
           canLoadMore: status == SearchStatus.filterSuccess,
         );
-        Column(
-          children: [
-            Text('Total: ${state.pokemons.length}'),
-            SizedBox(height: 12),
-            Expanded(
-              child: PokemonList(
-                pokemons: pokemonList,
-                refreshPokemons: _nextPageListener,
-                isLoadingPokemons: status == SearchStatus.nextPageLoading,
-                canLoadMore: status == SearchStatus.filterSuccess,
-              ),
-            ),
-          ],
-        );
+// Column(
+//           children: [
+//             Text('Total: ${state.pokemons.length}'),
+//             SizedBox(height: 12),
+//             Expanded(
+//               child: PokemonList(
+//                 pokemons: pokemonList,
+//                 refreshPokemons: _nextPageListener,
+//                 isLoadingPokemons: status == SearchStatus.nextPageLoading,
+//                 canLoadMore: status == SearchStatus.filterSuccess,
+//               ),
+//             ),
+//           ],
+//         );
       },
     );
   }

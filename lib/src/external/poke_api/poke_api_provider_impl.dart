@@ -28,7 +28,7 @@ class PokeApiProviderImpl implements PokeApiProvider {
       if (pokemonListData.data == null) throw CouldNotGetPokemonsList();
 
       return PokemonListResponse.fromJson(pokemonListData.data);
-    } on DioError catch (_) {
+    } on DioException catch (_) {
       throw CouldNotGetPokemonsList();
     }
   }
@@ -77,7 +77,7 @@ class PokeApiProviderImpl implements PokeApiProvider {
       );
 
       return pokemonDetails.mapPokemonDetailApiToPokemonDetails();
-    } on DioError catch (_) {
+    } on DioException catch (_) {
       throw CouldNotGetPokemonDetails();
     }
   }

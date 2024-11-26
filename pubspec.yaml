@@ -6,7 +6,7 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: '>=3.3.2 <4.0.0'
 
 dependencies:
   flutter:
@@ -14,17 +14,17 @@ dependencies:
 
   cupertino_icons: ^1.0.2
 
-  sqflite: ^2.0.1
-  dio: ^4.0.4
-  path: ^1.8.0
-  path_provider: ^2.0.7
-  json_annotation: ^4.4.0
+  sqflite: ^2.4.1
+  dio: ^5.7.0
+  path: ^1.9.0
+  path_provider: ^2.1.5
+  json_annotation: ^4.9.0
   bloc: ^8.0.1
   flutter_bloc: ^8.0.0
-  get_it: ^7.2.0
+  get_it: ^8.0.2
   sqflite_common_ffi:
   equatable:
-  pull_to_refresh_notification: ^2.2.0
+  pull_to_refresh_notification: ^3.1.0
 
 dev_dependencies:
   flutter_test:
@@ -39,7 +39,6 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/icons/
     - assets/images/pokeball_bg.png
     - assets/images/2.0x/pokeball_bg.png
     - assets/images/3.0x/pokeball_bg.png

@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:minha_pokedex/src/external/local_storage/pokemons/fav_pokemons_db_fields.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class FavPokemonsDbService {
@@ -14,7 +13,7 @@ class FavPokemonsDbService {
   Future<Database> get database async {
     if (_database != null) return _database!;
 
-    if (Platform.isWindows || Platform.isLinux) {
+    if (!Platform.isIOS || !Platform.isAndroid) {
       sqfliteFfiInit();
       databaseFactory = databaseFactoryFfi;
     }
